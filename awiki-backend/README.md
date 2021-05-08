@@ -1,7 +1,6 @@
 
-<p align="center">
-    <img src="http://www.arematics.com/images/banner/banner-borderless.png" width="350" title="Arematics Banner" 
-    alt="Banner">
+<p align="left">
+    <img src="https://www.arematics.com/assets/icons/logo-384.png" title="Arematics Logo" alt="Logo">
 </p>
 
 # Wiki Software RESTful Backend
