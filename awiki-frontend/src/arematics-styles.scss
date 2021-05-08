@@ -1,0 +1,186 @@
+/* You can add global styles to this file, and also import other style files */
+
+//Colors Schemas
+$color-light: black;
+$color-accent-light: #c3c3c3;
+$background-light: #ffffff;
+$background-accent-light: #f1f1f1;
+$input-background-color-light: #dcdcdc;
+
+$color-dark: #FFFFFF;
+$color-accent-dark: #AFAFAF;
+$background-dark: #0D0C0C;
+$background-accent-dark: #1E1E1E;
+$input-background-color-dark: #252525;
+
+:root {
+  --color-text: #{$color-light};
+  --color-accent-text: #{$color-accent-light};
+  --color-background: #{$background-light};
+  --color-background-accent: #{$background-accent-light};
+  --color-blue-accent: #1589E7;
+  --input-background-color: #{$input-background-color-light};
+}
+
+html, body{
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif !important;
+  background-color: var(--color-background);
+  min-height: 100%;
+  margin: 0;
+  padding: 0;
+  color: var(--color-text);
+}
+
+.importantText{
+  color: var(--color-blue-accent);
+}
+
+.shadowText{
+  color: var(--color-accent-text);
+}
+
+.link{
+  @extend .importantText;
+}
+
+h1, h2, h3 {
+  font-family: Lemon-Milk, serif !important;
+}
+
+h1, h2{
+  font-weight: 500 !important;
+}
+
+input{
+  outline: none;
+  border: none;
+  color: var(--color-text);
+  background-color: var(--input-background-color);
+  border-radius: 2px;
+}
+
+input:disabled{
+  color: var(--color-accent-text) !important;
+}
+
+input[type=number]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  opacity: 0;
+}
+
+.bodyContent{
+  margin-top: 30vh;
+  width: 100%;
+  margin-bottom: 45rem;
+}
+
+.containers{
+  margin: 0 auto;
+  padding: 0 50px;
+}
+
+.big-container{
+  @extend .containers;
+  max-width: 1440px;
+}
+
+.container{
+  @extend .containers;
+  max-width: 1220px;
+}
+
+.small-container{
+  @extend .containers;
+  max-width: 800px;
+}
+
+a {
+  text-decoration: none;
+}
+
+.flexbox{
+  display: flex;
+}
+
+.flexColumns{
+  flex-direction: column;
+}
+
+.fullWidth{
+  width: 100%;
+}
+
+.fullHeight{
+  height: 100%;
+}
+
+//Button Style
+.styledButton{
+  background-color: var(--color-blue-accent);
+  color: black;
+  width: 100%;
+  max-width: 250px;
+}
+
+.no-bottom-margin{
+  margin-bottom: 0 !important;
+}
+
+hr{
+  border-color: var(--input-background-color);
+  margin: 0 0 20px 0;
+}
+
+//invalid Input Style
+.ng-dirty .ng-invalid {
+  box-shadow: 0 0 4px 2px rgb(255, 0, 21, 0.33);
+  border: 1px solid #a94442 !important;
+}
+
+.mat-h1, .mat-headline, .mat-typography h1{
+  font-size: 1.4rem;
+}
+
+//Media Queries
+@media only screen and (max-width: 1100px) {
+  .containers, .small-container, .container, .big-container {
+    padding: 0 30px;
+  }
+}
+
+@media only screen and (max-width: 800px) {
+  .containers, .small-container, .container, .big-container {
+    padding: 0 20px;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .containers, .small-container, .container, .big-container {
+    padding: 0 10px;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .bodyContent{
+    margin-top: 2rem;
+  }
+
+  mat-bottom-sheet-container{
+    margin-bottom: 60%;
+  }
+}
+
+@media screen and(prefers-color-scheme: dark){
+  :root{
+    --color-text: #{$color-dark};
+    --color-accent-text: #{$color-accent-dark};
+    --color-background: #{$background-dark};
+    --color-background-accent: #{$background-accent-dark};
+    --input-background-color: #{$input-background-color-dark};
+  }
+}
+
+@font-face {
+  font-family: Lemon-Milk;
+  src: url("assets/LEMONMILK-Medium.otf");
+}
