@@ -12,6 +12,8 @@ import { FooterComponent } from './components/footer/footer.component';
 import {AppRouterModule} from './_router/router.module';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
+import {SafePipe} from './_pipe/safe.pipe';
+import { ImpressumComponent } from './components/impressum/impressum.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +24,9 @@ import { environment } from '../environments/environment';
     PageComponent,
     QueryComponent,
     HeadComponent,
-    FooterComponent
+    FooterComponent,
+    SafePipe,
+    ImpressumComponent
   ],
   imports: [
     BrowserModule,

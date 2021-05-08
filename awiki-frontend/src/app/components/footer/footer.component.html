@@ -1,0 +1,17 @@
+<div class="container">
+  <section id="information">
+    <div>
+      <hr>
+      <nav class="footer-nav">
+        <ul class="footer-nav-items">
+          <li *ngFor="let navItem of navItems">
+            <a *ngIf="navItem.url.startsWith('ts3')" [href]="navItem.url | safe: 'url'">{{navItem.text}}</a>
+            <a *ngIf="!navItem.url.startsWith('ts3')" [routerLink]="navItem.url">{{navItem.text}}</a>
+          </li>
+        </ul>
+      </nav>
+      <hr>
+    </div>
+    <p class="copyright">&copy; {{currentYear}} Arematics UG (haftungsbeschränkt)</p>
+  </section>
+</div>
