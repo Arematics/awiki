@@ -1,0 +1,27 @@
+.menubar > ul{
+  list-style-type: none;
+  font-family: Lemon-Milk, sans-serif;
+  padding-left: 20px;
+  margin-top: 5px;
+}
+
+.menubar{
+  max-width: 150px;
+}
+
+.menubar > h3{
+  margin-bottom: 2px;
+  font-size: 0.9em;
+  cursor: pointer;
+}
+
+.menubar > ul > li > a{
+  font-size: 0.9em;
+}
+
+.bar{
+  width: 150px;
+  align-items: center;
+  justify-content: center;
+  top: -5px;
+}
