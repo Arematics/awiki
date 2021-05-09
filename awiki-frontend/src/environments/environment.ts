@@ -4,6 +4,9 @@
 
 export const environment = {
   production: false,
+  rest_url: 'http://localhost:8080/api/v1/',
+  auth_api: 'https://159.69.32.112:8443/',
+  redirect_to: 'https://wiki.arematics.com/',
   footerNavigation: [{text: 'Startseite', url: '/'}, {text: 'Impressum', url: '/impressum/'}]
 };
 
