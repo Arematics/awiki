@@ -14,6 +14,10 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import {SafePipe} from './_pipe/safe.pipe';
 import { ImpressumComponent } from './components/impressum/impressum.component';
+import {FaIconLibrary, FontAwesomeModule} from '@fortawesome/angular-fontawesome';
+import {faCaretDown, faCaretUp} from '@fortawesome/free-solid-svg-icons';
+import { GroupComponent } from './components/menu/group/group.component';
+import {MatDividerModule} from '@angular/material/divider';
 
 @NgModule({
   declarations: [
@@ -26,7 +30,8 @@ import { ImpressumComponent } from './components/impressum/impressum.component';
     HeadComponent,
     FooterComponent,
     SafePipe,
-    ImpressumComponent
+    ImpressumComponent,
+    GroupComponent
   ],
   imports: [
     BrowserModule,
@@ -36,9 +41,17 @@ import { ImpressumComponent } from './components/impressum/impressum.component';
       // Register the ServiceWorker as soon as the app is stable
       // or after 30 seconds (whichever comes first).
       registrationStrategy: 'registerWhenStable:30000'
-    })
+    }),
+    FontAwesomeModule,
+    MatDividerModule
   ],
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+  constructor(library: FaIconLibrary) {
+    // Add multiple icons to the library
+    library.addIcons(faCaretUp);
+    library.addIcons(faCaretDown);
+  }
+}
