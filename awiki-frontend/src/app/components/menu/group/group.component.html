@@ -1,4 +1,4 @@
-<div class="menubar">
+<nav class="menubar">
   <h3 (click)="open = !open" class="noselect"> {{group.title}} </h3>
   <div class="flexbox bar">
     <mat-divider style="flex: 1" class="noselect"></mat-divider>
@@ -7,7 +7,7 @@
   </div>
   <ul *ngIf="open">
     <li *ngFor="let entry of group.entries">
-      <a>{{entry.title}}</a>
+      <a [routerLink]="['entry', entry.id]">{{entry.title}}</a>
     </li>
   </ul>
-</div>
+</nav>

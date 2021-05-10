@@ -1,1 +1,2 @@
-<h3>ID IS {{entryId}}</h3>
+<h2 *ngIf="entry === null">Not found</h2>
+<h3 *ngIf="entry !== null">Entry Title is {{entry.title}}</h3>

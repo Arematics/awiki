@@ -18,6 +18,7 @@ import {FaIconLibrary, FontAwesomeModule} from '@fortawesome/angular-fontawesome
 import {faCaretDown, faCaretUp} from '@fortawesome/free-solid-svg-icons';
 import { GroupComponent } from './components/menu/group/group.component';
 import {MatDividerModule} from '@angular/material/divider';
+import {HttpClientModule} from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -43,7 +44,8 @@ import {MatDividerModule} from '@angular/material/divider';
       registrationStrategy: 'registerWhenStable:30000'
     }),
     FontAwesomeModule,
-    MatDividerModule
+    MatDividerModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
