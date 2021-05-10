@@ -19,6 +19,13 @@ import {faCaretDown, faCaretUp} from '@fortawesome/free-solid-svg-icons';
 import { GroupComponent } from './components/menu/group/group.component';
 import {MatDividerModule} from '@angular/material/divider';
 import {HttpClientModule} from '@angular/common/http';
+import {MatOptionModule} from '@angular/material/core';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatInputModule} from '@angular/material/input';
+import {ReactiveFormsModule} from '@angular/forms';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {AutoCompleteModule} from 'primeng/autocomplete';
 
 @NgModule({
   declarations: [
@@ -45,7 +52,14 @@ import {HttpClientModule} from '@angular/common/http';
     }),
     FontAwesomeModule,
     MatDividerModule,
-    HttpClientModule
+    HttpClientModule,
+    MatOptionModule,
+    MatAutocompleteModule,
+    MatFormFieldModule,
+    MatInputModule,
+    ReactiveFormsModule,
+    BrowserAnimationsModule,
+    AutoCompleteModule
   ],
   providers: [],
   bootstrap: [AppComponent]

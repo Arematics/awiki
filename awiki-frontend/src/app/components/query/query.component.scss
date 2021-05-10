@@ -1,0 +1,11 @@
+::ng-deep .searchQuery{
+  width: 50%;
+  max-width: 400px;
+}
+
+
+::ng-deep .searchQuery > input{
+  width: 100%;
+  height: 30px;
+  padding: 5px 10px;
+}
