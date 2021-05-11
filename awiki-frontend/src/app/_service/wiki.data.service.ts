@@ -2,7 +2,6 @@ import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {environment} from '../../environments/environment';
-import {WikiEntry} from '../_model/wiki.entry';
 
 // @ts-ignore
 const headers = new HttpHeaders({
@@ -14,8 +13,6 @@ const headers = new HttpHeaders({
   providedIn: 'root'
 })
 export class WikiDataService{
-
-  map = new Map<number, WikiEntry>();
 
   constructor(private http: HttpClient) { }
 
