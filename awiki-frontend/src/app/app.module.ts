@@ -15,7 +15,7 @@ import { environment } from '../environments/environment';
 import {SafePipe} from './_pipe/safe.pipe';
 import { ImpressumComponent } from './components/impressum/impressum.component';
 import {FaIconLibrary, FontAwesomeModule} from '@fortawesome/angular-fontawesome';
-import {faCaretDown, faCaretUp} from '@fortawesome/free-solid-svg-icons';
+import {faCaretDown, faCaretUp, faClock} from '@fortawesome/free-solid-svg-icons';
 import { GroupComponent } from './components/menu/group/group.component';
 import {MatDividerModule} from '@angular/material/divider';
 import {HttpClientModule} from '@angular/common/http';
@@ -72,5 +72,6 @@ export class AppModule {
     // Add multiple icons to the library
     library.addIcons(faCaretUp);
     library.addIcons(faCaretDown);
+    library.addIcons(faClock);
   }
 }

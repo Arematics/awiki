@@ -55,14 +55,27 @@
   background-color: #164f7d;
 }
 
-.mat-divider{
+.mat-divider {
   border-top-color: var(--color-text);
+}
+
+.mat-divider-vertical{
+  border-right-color: var(--color-text);
 }
 
 .p-autocomplete .p-autocomplete-panel{
   background-color: var(--color-background-accent);
 }
 
-.p-autocomplete-panel .p-autocomplete-items .p-autocomplete-item:hover{
-  background-color: var(--color-background) !important;
+.searchQuery .p-autocomplete-panel .p-autocomplete-items .p-autocomplete-item:hover{
+  background-color: var(--color-background);
+}
+
+.p-editor-container > .p-editor-toolbar.ql-snow{
+  background-color: var(--color-background);
+}
+
+.p-editor-container > .ql-container.ql-snow > .ql-editor{
+  color: var(--color-text);
+  background-color: var(--color-background);
 }
