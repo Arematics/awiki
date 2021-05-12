@@ -1,5 +1,14 @@
 <h1>Arematics Wiki</h1>
-<p-autoComplete styleClass="searchQuery" [suggestions]="filteredCountries"
+<p-autoComplete styleClass="searchQuery" [suggestions]="filteredResults"
                 (completeMethod)="filterCountry($event)"
+                (onSelect)="select($event)"
                 field="label">
+  <ng-template let-item pTemplate="item">
+    <div class="query-item">
+      <h3>{{item.label}}</h3>
+      <p-editor styleClass="queryCodeComponent" *ngIf="item.text.length > 0" readonly [ngModel]="item.text">
+        <ng-template pTemplate="header"></ng-template>
+      </p-editor>
+    </div>
+  </ng-template>
 </p-autoComplete>

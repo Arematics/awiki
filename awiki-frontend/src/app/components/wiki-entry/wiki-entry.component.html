@@ -1,2 +1,11 @@
-<h2 *ngIf="entry === null">Not found</h2>
-<h3 *ngIf="entry !== null">Entry Title is {{entry.title}}</h3>
+<section id="no-entry-content" *ngIf="entry === undefined || group === undefined">
+  <h2>No entry found</h2>
+</section>
+
+<section id="entry-content" *ngIf="entry !== undefined && group !== undefined">
+  <h3>Entry Title is {{group.title}} - {{entry.title}}</h3>
+  <h3>Entry Title is {{entry.orderIndex}}</h3>
+  <h3>Entry Title is {{entry.image}}</h3>
+  <p-editor [(ngModel)]="entry.content" [style]="{'height':'320px'}">
+  </p-editor>
+</section>

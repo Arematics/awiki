@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-import {WikiEntry} from '../../_model/wiki.entry';
+import {WikiDataService} from '../../_service/wiki.data.service';
+import {MenuGroup} from '../../_model/menu.group';
+import {FullEntry} from '../../_model/fullEntry';
 
 @Component({
   selector: 'app-wiki-entry',
@@ -8,14 +10,23 @@ import {WikiEntry} from '../../_model/wiki.entry';
   styleUrls: ['./wiki-entry.component.scss']
 })
 export class WikiEntryComponent implements OnInit {
-  entry: WikiEntry;
+  group: MenuGroup;
+  entry: FullEntry;
 
-  constructor(private route: ActivatedRoute) { }
+  constructor(private route: ActivatedRoute, private wikiService: WikiDataService) { }
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
       const id = params.get('id');
       if (id !== undefined && id !== null){
+        this.group = undefined;
+        this.entry = undefined;
+        this.wikiService.getResource('fullentry/' + id).subscribe(entry => {
+          this.entry = entry;
+          this.wikiService.getResource('entries/' + id + '/menuGroup').subscribe(group => {
+            this.group = group;
+          });
+        });
       }
     });
   }

@@ -54,3 +54,15 @@
   color: var(--color-accent-text) !important;
   background-color: #164f7d;
 }
+
+.mat-divider{
+  border-top-color: var(--color-text);
+}
+
+.p-autocomplete .p-autocomplete-panel{
+  background-color: var(--color-background-accent);
+}
+
+.p-autocomplete-panel .p-autocomplete-items .p-autocomplete-item:hover{
+  background-color: var(--color-background) !important;
+}

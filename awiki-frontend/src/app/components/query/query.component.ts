@@ -1,4 +1,19 @@
 import {Component, OnInit} from '@angular/core';
+import {WikiDataService} from '../../_service/wiki.data.service';
+import {map} from 'rxjs/operators';
+import {Router} from '@angular/router';
+
+class ResultItem{
+  label: string;
+  text: string;
+  entryId: number;
+
+  constructor(label: string, text: string, entryId: number) {
+    this.label = label;
+    this.text = text;
+    this.entryId = entryId;
+  }
+}
 
 @Component({
   selector: 'app-query',
@@ -7,25 +22,56 @@ import {Component, OnInit} from '@angular/core';
 })
 export class QueryComponent implements OnInit {
 
-  countries: any[];
-  filteredCountries: any[];
+  filteredResults: any[];
 
-  constructor() { }
+  constructor(private router: Router, private wikiService: WikiDataService) { }
 
   ngOnInit(): void {
-    this.countries = [{label: 'Berlin', name: 'Berlin'}, {label: 'Munich', name: 'Munich'}, {label: 'Düsseldorf', name: 'Düsseldorf'}];
   }
 
-  filterCountry(event): any {
-    const filtered: any[] = [];
+  async filterCountry(event): Promise<any> {
+    const filtered: ResultItem[] = [];
     const query = event.query;
 
-    for (const country of this.countries) {
-      if (country.name.toLowerCase().indexOf(query.toLowerCase()) === 0) {
-        filtered.push(country);
-      }
+    if (query.indexOf('title: ') === 0){
+      const results = await this.fetchResultItemsByTitle(query);
+      filtered.push(...results);
+    }else if (query.indexOf('text: ') === 0){
+      const results = await this.fetchResultItemsByContent(query);
+      filtered.push(...results);
+    }else{
+      const results = await this.fetchResultItemsByTitle(query);
+      filtered.push(...results);
+      const results2 = await this.fetchResultItemsByContent(query);
+      filtered.push(...results2);
     }
 
-    this.filteredCountries = filtered;
+    this.filteredResults = filtered;
+    event.query = '';
+  }
+
+  fetchResultItemsByTitle(input): Promise<ResultItem[]>{
+    input = input.indexOf('title: ') === 0 ? input.substr(input.indexOf(' ') + 1) : input;
+    return this.wikiService.getResource('fullentry/search/findAllByTitleContains?title=' + input)
+      .pipe(map(result => result._embedded.fullentry.map(entry => new ResultItem(entry.title, entry.content.substr(0, 50), entry.id))))
+      .toPromise();
+  }
+
+  fetchResultItemsByContent(input): Promise<ResultItem[]>{
+    input = input.indexOf('text: ') === 0 ? input.substr(input.indexOf(' ') + 1) : input;
+    return this.wikiService.getResource('fullentry/search/findAllByContentContains?like=' + input)
+      .pipe(map(result => result._embedded.fullentry.map(entry => {
+        const content = entry.content;
+        const first = content.indexOf(input);
+        const end = content.indexOf(' ', first + input.length);
+        const begin = first - 5 < 0 ? 0 : first - 5;
+        const trim = content.substr(begin, end + 5);
+        return new ResultItem(trim, entry.content.substr(0, 50), entry.id);
+      })))
+      .toPromise();
+  }
+
+  select(event: any): void {
+    this.router.navigate(['entry', event.entryId]).then();
   }
 }

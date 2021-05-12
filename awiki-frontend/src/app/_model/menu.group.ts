@@ -1,8 +1,8 @@
-import {WikiEntry} from './wiki.entry';
+import {SmallEntry} from './smallEntry';
 
 export interface MenuGroup{
   id: number;
   title: string;
   orderIndex: number;
-  entries: WikiEntry[];
+  entries: SmallEntry[];
 }
