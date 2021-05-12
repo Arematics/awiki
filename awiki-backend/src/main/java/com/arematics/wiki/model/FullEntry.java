@@ -12,7 +12,7 @@ import java.sql.Timestamp;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "wiki_entries")
-public class WikiEntry implements Serializable {
+public class FullEntry implements Serializable {
     @Id
     private Long id;
     private String title;
@@ -21,4 +21,7 @@ public class WikiEntry implements Serializable {
     @OneToOne
     @JoinColumn(name = "menu_group")
     private MenuGroup menuGroup;
+    private String image;
+    private String content;
+    private Integer calls;
 }

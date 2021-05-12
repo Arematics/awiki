@@ -21,5 +21,5 @@ public class MenuGroup implements Serializable {
     private Integer orderIndex;
     @OneToMany
     @JoinColumn(name = "menu_group", referencedColumnName = "id")
-    private Set<WikiEntry> entries;
+    private Set<SmallEntry> entries;
 }
