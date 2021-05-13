@@ -1,9 +1,25 @@
 #content{
   width: 80%;
-  margin-bottom: 45rem;
 }
 
 .spacer{
   padding-left: 15px;
   margin-right: 25px;
 }
+
+@media only screen and (max-width: 800px) {
+  #content{
+    width: 100%;
+  }
+
+  .spacer{
+    display: none;
+  }
+  
+  app-query{
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+  }
+}
+

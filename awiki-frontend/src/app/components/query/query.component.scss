@@ -14,3 +14,15 @@
 .query-item{
   color: var(--color-text);
 }
+
+@media only screen and (max-width: 800px) {
+  h1{
+    text-align: center;
+  }
+
+  ::ng-deep .searchQuery, p-autoComplete{
+    width: 100%;
+    text-align: center;
+  }
+}
+

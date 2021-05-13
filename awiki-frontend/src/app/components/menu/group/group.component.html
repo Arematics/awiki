@@ -7,7 +7,7 @@
   </div>
   <ul *ngIf="open">
     <li *ngFor="let entry of group.entries">
-      <a [routerLink]="['entry', entry.id]">{{entry.title}}</a>
+      <a [routerLink]="['/entry', entry.id]">{{entry.title}}</a>
     </li>
   </ul>
 </nav>

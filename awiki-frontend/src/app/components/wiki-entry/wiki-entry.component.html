@@ -1,23 +1,25 @@
-<section id="no-entry-content" *ngIf="entry === undefined">
-  <h2>No entry found</h2>
-</section>
+<app-page class="big-container flexbox page">
+  <section id="no-entry-content" *ngIf="entry === undefined">
+    <h2>No entry found</h2>
+  </section>
 
-<section id="entry-content" *ngIf="entry !== undefined">
-  <div class="entryHeader">
-    <div class="entryInformation">
-      <div class="entry-title">
-        <h2>{{group.title}}</h2>
-        <mat-divider></mat-divider>
-        <h3>{{entry.title}}</h3>
+  <section id="entry-content" *ngIf="entry !== undefined">
+    <div class="entryHeader">
+      <div class="entryInformation">
+        <div class="entry-title">
+          <h2>{{group.title}}</h2>
+          <mat-divider></mat-divider>
+          <h3>{{entry.title}}</h3>
+        </div>
+        <div class="flexbox lastChange">
+          <fa-icon [icon]="['fas', 'clock']"></fa-icon>
+          <h4>Last Change {{entry.lastChange | date: 'dd.MM.yyyy HH:mm:ss'}}</h4>
+        </div>
       </div>
-      <div class="flexbox lastChange">
-        <fa-icon [icon]="['fas', 'clock']"></fa-icon>
-        <h4>Last Change {{entry.lastChange | date: 'dd.MM.yyyy HH:mm:ss'}}</h4>
-      </div>
+      <img src="{{entry.image}}" alt="{{entry.title}} Image"/>
     </div>
-    <img src="{{entry.image}}" alt="{{entry.title}} Image"/>
-  </div>
-  <p-editor [(ngModel)]="entry.content" readonly="true" [style]="{'height':'320px'}">
-    <p-header> </p-header>
-  </p-editor>
-</section>
+    <p-editor [(ngModel)]="entry.content" readonly="true" [style]="{'height':'320px'}">
+      <p-header> </p-header>
+    </p-editor>
+  </section>
+</app-page>
