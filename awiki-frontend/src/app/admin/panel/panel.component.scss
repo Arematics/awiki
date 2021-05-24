@@ -1,0 +1,41 @@
+#management{
+  margin-top: 10rem;
+  margin-bottom: 10rem;
+}
+
+#dragDropStatus {
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+#dragDropStatus > .dot{
+  margin-left: 10px;
+}
+
+#dragDropStatus > h3{
+  margin-bottom: 0;
+}
+
+#groupManagement{
+  justify-content: flex-end;
+}
+
+.dot{
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.dragDropEnabled{
+  background-color: #21ce21;
+}
+
+.dragDropDisabled{
+  background-color: #e60404;
+}
+
+.groupPanel .mat-action-row{
+  padding: 0;
+  border-top: 0;
+}

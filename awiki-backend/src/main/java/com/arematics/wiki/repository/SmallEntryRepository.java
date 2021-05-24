@@ -7,8 +7,10 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 
 import java.util.List;
 
-@CrossOrigin
+@CrossOrigin(origins = "http://localhost:4200")
 @RepositoryRestResource(collectionResourceRel = "entries", path = "entries")
 public interface SmallEntryRepository extends JpaRepository<SmallEntry, Long> {
     List<SmallEntry> findAllByTitleContains(String title);
+    List<SmallEntry> findAllByGroup_Id(Long id);
+    boolean existsByTitleAndGroup_Id(String title, Long id);
 }

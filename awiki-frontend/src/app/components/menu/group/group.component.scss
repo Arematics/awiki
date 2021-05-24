@@ -21,9 +21,17 @@
   color: var(--color-text);
 }
 
+.menubar > ul > li > a:hover{
+  color: var(--color-accent-text);
+}
+
 .bar{
   width: 150px;
   align-items: center;
   justify-content: center;
   top: -5px;
+}
+
+.menubar > ul > li > .selectedCurrent{
+  color: var(--color-blue-accent);
 }

@@ -8,8 +8,33 @@
   width: 100%;
   height: 30px;
   padding: 5px 10px;
+  background-color: var(--color-background-accent);
+  color: var(--color-text);
+  border: none;
 }
 
+::ng-deep .searchQuery > input:enabled:focus{
+  border: 1px solid var(--color-blue-accent);
+  transition: 1s;
+  outline: none;
+  box-shadow: none;
+}
+
+::ng-deep .searchQuery .ql-toolbar.ql-snow{
+  display :none;
+  border: 0;
+}
+
+::ng-deep .searchQuery .ql-container.ql-snow{
+  border: 0;
+}
+
+::ng-deep .searchQuery .ql-container.ql-snow > .ql-editor{
+  padding: 4px 8px;
+  border-radius: 3px;
+  min-height: 60px;
+  font-size: 0.9em;
+}
 
 .query-item{
   color: var(--color-text);

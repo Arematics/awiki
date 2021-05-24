@@ -1,34 +1,49 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {Observable} from 'rxjs';
+import {Observable, of} from 'rxjs';
 import {environment} from '../../environments/environment';
-
-// @ts-ignore
-const headers = new HttpHeaders({
-  'Content-type': 'application/json',
-  Authorization: 'Basic YWRtaW46c2FBJWlzYTVBYjBIL1Yz'
-});
+import {AbstractControl, AsyncValidatorFn, ValidationErrors} from '@angular/forms';
+import {catchError, map} from 'rxjs/operators';
+import {CookieService} from 'ngx-cookie-service';
+import {hasErrors} from '@angular/compiler-cli/ngcc/src/packages/transformer';
 
 @Injectable({
   providedIn: 'root'
 })
 export class WikiDataService{
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private cookies: CookieService) {}
 
   getResource(resourceUrl): Observable<any> {
+    const headers = new HttpHeaders({
+      'Content-type': 'application/json',
+      Authorization: 'Basic ' + this.cookies.get('access_token')
+    });
     return this.http.get(environment.rest_url + resourceUrl, { headers });
   }
 
   postResource(url, resource): Observable<any>{
+    const headers = new HttpHeaders({
+      'Content-type': 'application/json',
+      Authorization: 'Basic ' + this.cookies.get('access_token')
+    });
     return this.http.post(environment.rest_url + url, resource, { headers });
   }
 
   putResource(url, resource): Observable<any>{
+    const headers = new HttpHeaders({
+      'Content-type': 'application/json',
+      Authorization: 'Basic ' + this.cookies.get('access_token')
+    });
     return this.http.put(environment.rest_url + url, resource, { headers });
   }
 
   deleteResource(url): Observable<any>{
-    return this.http.delete(environment.rest_url + url, { headers });
+    const headers = new HttpHeaders({
+      'Content-type': 'application/json',
+      Authorization: 'Basic ' + this.cookies.get('access_token')
+    });
+
+    return this.http.delete(environment.rest_url + url, {headers});
   }
 }

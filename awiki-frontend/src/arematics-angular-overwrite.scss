@@ -1,5 +1,15 @@
-::ng-deep .mat-primary{
-  color: var(--color-blue-accent);
+.mat-primary{
+  font-family: "Quicksand", "Open Sans", sans-serif;
+}
+
+.mat-typography h1, .mat-typography h2, .mat-typography h3, .mat-typography h4 {
+  font-family: Lemon-Milk, serif;
+}
+
+.ql-snow .ql-editor{
+  .mat-typography h1, h2, h3, h4{
+    font-family: SansSerif, sans-serif;
+  }
 }
 
 .mat-primary .mat-option.mat-selected:not(.mat-option-disabled){
@@ -63,12 +73,27 @@
   border-right-color: var(--color-text);
 }
 
+.mat-dialog-container, .mat-stepper-horizontal, .mat-stepper-vertical, .mat-expansion-panel{
+  background: var(--color-background-accent);
+  color: var(--color-text);
+}
+
+.mat-flat-button.mat-primary, .mat-raised-button.mat-primary, .mat-fab.mat-primary, .mat-mini-fab.mat-primary,
+.mat-step-header .mat-step-icon-selected, .mat-step-header .mat-step-icon-state-done,
+.mat-step-header .mat-step-icon-state-edit{
+  background-color: var(--color-blue-background);
+  color: #e2e2e2;
+}
+
 .p-autocomplete .p-autocomplete-panel{
   background-color: var(--color-background-accent);
+  border: none;
 }
 
 .searchQuery .p-autocomplete-panel .p-autocomplete-items .p-autocomplete-item:hover{
   background-color: var(--color-background);
+  border-left: 1px solid var(--color-blue-accent);
+  transition: 1s;
 }
 
 .p-editor-container > .p-editor-toolbar.ql-snow{
@@ -78,4 +103,5 @@
 .p-editor-container > .ql-container.ql-snow > .ql-editor{
   color: var(--color-text);
   background-color: var(--color-background);
+  font-family: SansSerif, sans-serif;
 }

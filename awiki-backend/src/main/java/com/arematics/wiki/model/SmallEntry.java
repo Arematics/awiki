@@ -1,5 +1,6 @@
 package com.arematics.wiki.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -14,11 +15,12 @@ import java.sql.Timestamp;
 @Table(name = "wiki_entries")
 public class SmallEntry implements Serializable {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String title;
     private Integer orderIndex;
     private Timestamp lastChange;
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "menu_group")
-    private MenuGroup menuGroup;
+    private MenuGroup group;
 }

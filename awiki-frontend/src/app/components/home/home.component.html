@@ -1,2 +1,17 @@
 <app-page class="big-container flexbox page">
+  <h2 class="mostViewedTitle">Most Viewed Topics</h2>
+
+  <section id="mostViewed">
+
+    <div *ngFor="let entry of filteredResults" class="entryMostViewed" [routerLink]="['/entry', entry.id]">
+      <div class="entryInformation">
+        <div class="entry-title">
+          <h2>t</h2>
+          <mat-divider></mat-divider>
+          <h3>{{entry.title}}</h3>
+        </div>
+      </div>
+      <img src="{{entry.image}}" alt="{{entry.title}} Image"/>
+    </div>
+  </section>
 </app-page>

@@ -5,7 +5,7 @@ import {FullEntry} from '../../_model/fullEntry';
 import {MenuGroup} from '../../_model/menu.group';
 
 @Component({
-  selector: 'app-wiki-entry',
+  selector: 'app-wiki-entry[entry][group]',
   templateUrl: './wiki-entry.component.html',
   styleUrls: ['./wiki-entry.component.scss']
 })

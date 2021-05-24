@@ -12,19 +12,15 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.cors()
-                .and()
+        http.cors().and().csrf().disable()
                 .authorizeRequests()
-                /*.antMatchers(HttpMethod.POST, "/**")
-                .hasAuthority("SCOPE_write")
-                .antMatchers(HttpMethod.PUT, "/**")
+                .antMatchers(HttpMethod.OPTIONS, "/**")
+                .permitAll()/*
+                .antMatchers(HttpMethod.POST, "/**")
                 .hasAuthority("SCOPE_write")
                 .antMatchers(HttpMethod.DELETE, "/**")
                 .hasAuthority("SCOPE_write")*/
                 .anyRequest()
-                .permitAll()
-                .and()
-                .oauth2ResourceServer()
-                .jwt();
+                .permitAll();
     }
 }

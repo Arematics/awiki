@@ -1,0 +1,48 @@
+<article id="management" class="container">
+  <section id="menu">
+    <h1>Wiki Control Panel</h1>
+  </section>
+  <section id="dragDropStatus" class="flexbox">
+    <h3>Drag & Drop Status: </h3>
+    <div class="dot {{entryOrderChange ? 'dragDropEnabled' : 'dragDropDisabled'}}"></div>
+  </section>
+  <section id="groupManagement" class="flexbox">
+    <button *ngIf="!createGroupMode" mat-raised-button color="primary" (click)="createNewGroup()">Create New Group</button>
+    <input *ngIf="createGroupMode" matInput #input placeholder="Enter group name..."/>
+    <button *ngIf="createGroupMode" mat-raised-button color="primary" (click)="sendCreate()">Create</button>
+  </section>
+  <mat-accordion cdkDropList class="dropList" (cdkDropListDropped)="drop($event)">
+    <mat-expansion-panel class="dropListItem" *ngFor="let group of fetchedGroups" (opened)="fetchEntries(group.id)"
+                         cdkDrag
+                         [cdkDragDisabled]="!entryOrderChange">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          {{group.title}}
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <ng-template matExpansionPanelContent>
+        <mat-accordion cdkDropList class="dropList" (cdkDropListDropped)="dropEntry($event)">
+          <mat-expansion-panel *ngFor="let entry of fetchedEntries" (opened)="fetchData(entry.id)" cdkDrag
+                               [cdkDragDisabled]="!entryOrderChange" hideToggle>
+            <mat-expansion-panel-header class="groupPanel">
+              <mat-panel-title>
+                {{entry.title}}
+              </mat-panel-title>
+              <mat-action-row>
+                <button mat-raised-button color="primary" (click)="openDeleteEntryDialog(entry)">Delete</button>
+                <button mat-raised-button color="primary" (click)="editEntry(group, entry)">Edit</button>
+              </mat-action-row>
+            </mat-expansion-panel-header>
+          </mat-expansion-panel>
+        </mat-accordion>
+      </ng-template>
+      <mat-action-row>
+        <button mat-raised-button color="primary" (click)="entryOrderChange = !entryOrderChange">
+          Toggle Drag&Drop
+        </button>
+        <button mat-raised-button color="primary" [disabled]="fetchedEntries.length > 0" (click)="openDeleteGroupDialog(group)">Delete</button>
+        <button mat-raised-button color="primary" (click)="createNewEntry(group, undefined)">Create Entry</button>
+      </mat-action-row>
+    </mat-expansion-panel>
+  </mat-accordion>
+</article>

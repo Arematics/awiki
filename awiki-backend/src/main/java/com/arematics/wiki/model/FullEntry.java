@@ -1,6 +1,11 @@
 package com.arematics.wiki.model;
 
-import lombok.*;
+import com.sun.istack.NotNull;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -14,13 +19,13 @@ import java.sql.Timestamp;
 @Table(name = "wiki_entries")
 public class FullEntry implements Serializable {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String title;
     private Integer orderIndex;
     private Timestamp lastChange;
-    @OneToOne
-    @JoinColumn(name = "menu_group")
-    private MenuGroup menuGroup;
+    @Column(name = "menu_group")
+    private Long menuGroup;
     private String image;
     private String content;
     private Integer calls;

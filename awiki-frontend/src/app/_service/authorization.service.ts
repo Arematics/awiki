@@ -16,7 +16,7 @@ export class AuthorizationService{
     const params = new URLSearchParams();
     params.append('grant_type', 'authorization_code');
     params.append('client_id', this.clientId);
-    params.append('client_secret', 'b91c9112-e270-4e8c-b813-8f23c2bc2810');
+    params.append('client_secret', '638d0a30-a139-441c-b0bf-9d719e711e9c');
     params.append('redirect_uri', environment.redirect_to);
     params.append('code', code);
 

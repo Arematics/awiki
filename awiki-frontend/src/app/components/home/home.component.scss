@@ -2,3 +2,55 @@
   margin-top: 3rem;
   margin-bottom: 3rem;
 }
+
+.mostViewedTitle{
+  padding-top: 8rem;
+}
+
+#mostViewed{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.entryMostViewed {
+  margin-top: 20px;
+  width: 32%;
+  position: relative;
+  cursor: pointer;
+}
+
+.entryMostViewed > img{
+  width: 100%;
+}
+
+.entryMostViewed:hover > div > div > h2{
+  transition: 1s;
+  font-size: 1.4em;
+}
+
+.entryMostViewed:hover > div > div > h3{
+  transition: 1s;
+  font-size: 1.4em;
+  color: var(--color-blue-accent);
+}
+
+.entryMostViewed > div{
+  position: absolute;
+  text-align: center;
+  z-index: 5;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+}
+
+.entryMostViewed .mat-divider{
+  border-top-color: white;
+}
+
+.entryMostViewed > img{
+  max-width: 100%;
+  filter: blur(3px);
+  -webkit-filter: blur(3px);
+}

@@ -33,7 +33,13 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok'
 
     //Tests
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+    testImplementation group: 'io.rest-assured', name: 'rest-assured', version: '4.3.3'
+    testCompile group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: '2.4.1'
+
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.6.0'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
+
 }
 
 test {

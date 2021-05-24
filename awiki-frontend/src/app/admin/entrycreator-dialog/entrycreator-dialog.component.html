@@ -1,0 +1,79 @@
+<h1 mat-dialog-title>{{exists ? 'Edit' : 'Create new '}} Wiki Entry (Group: {{group.title}})</h1>
+<div mat-dialog-content>
+  <mat-vertical-stepper [linear]="true" #stepper>
+    <ng-template matStepperIcon="title">
+      <mat-icon>title</mat-icon>
+    </ng-template>
+    <ng-template matStepperIcon="image">
+      <mat-icon>image</mat-icon>
+    </ng-template>
+    <ng-template matStepperIcon="content">
+      <mat-icon>create</mat-icon>
+    </ng-template>
+    <ng-template matStepperIcon="summary">
+      <mat-icon>remove_red_eye</mat-icon>
+    </ng-template>
+
+    <mat-step [stepControl]="titleFormGroup" label="Choose title" state="title">
+      <form [formGroup]="titleFormGroup">
+        <mat-form-field>
+          <mat-label>Title</mat-label>
+          <input matInput
+                 [value]="titleControl.value"
+                 placeholder="Entry Title"
+                 formControlName="titleControl"
+                 required>
+          <mat-error *ngIf="titleFormGroup.get('titleControl').dirty &&
+          !titleFormGroup.get('titleControl').hasError('validateExists')">
+            Title already exists in this group
+          </mat-error>
+        </mat-form-field>
+        <div>
+          <button mat-button matStepperNext>Next</button>
+        </div>
+      </form>
+    </mat-step>
+    <mat-step [stepControl]="imageFormGroup" label="Choose image" state="image">
+      <form [formGroup]="imageFormGroup" disabled>
+        <div class="flexbox flexColumns">
+          <mat-form-field>
+            <mat-label>Image</mat-label>
+            <input matInput [value]="imageControl.value"
+                   formControlName="imageControl"
+                   readonly
+                   required
+                   (keydown)="$event.preventDefault();"/>
+            <button mat-icon-button matSuffix (click)="fileInput.click()">
+              <mat-icon>attach_file</mat-icon>
+            </button>
+            <input hidden (change)="selectFile($event)" #fileInput type="file" id="file">
+          </mat-form-field>
+          <img *ngIf="image !== ''" src="{{image}}" alt="New Entry Image" class="imagePreview"/>
+        </div>
+        <div>
+          <button mat-button matStepperPrevious>Back</button>
+          <button mat-button matStepperNext>Next</button>
+        </div>
+      </form>
+    </mat-step>
+    <mat-step [stepControl]="contentFormGroup" label="Write content" state="content">
+      <form [formGroup]="contentFormGroup">
+        <p-editor formControlName="contentControl"></p-editor>
+        <div>
+          <button mat-button matStepperPrevious>Back</button>
+          <button mat-button matStepperNext>Next</button>
+        </div>
+      </form>
+    </mat-step>
+    <mat-step label="Summary" state="summary">
+      <app-entry-box [entryGroup]="group" [entry]="validateData()" textStyleClass="editorStyle"></app-entry-box>
+      <div>
+        <button mat-button matStepperPrevious>Back</button>
+        <button mat-button (click)="saveEntry()" mat-dialog-close>Save</button>
+      </div>
+    </mat-step>
+  </mat-vertical-stepper>
+</div>
+<div mat-dialog-actions>
+  <button mat-raised-button>Interrupt</button>
+</div>
