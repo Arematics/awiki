@@ -1,4 +1,6 @@
 import { Component} from '@angular/core';
+import {MatBottomSheet} from '@angular/material/bottom-sheet';
+import {MenuComponent} from '../menu/menu.component';
 
 @Component({
   selector: 'app-head',
@@ -7,5 +9,9 @@ import { Component} from '@angular/core';
 })
 export class HeadComponent{
 
-  constructor() { }
+  constructor(private bottomSheet: MatBottomSheet) { }
+
+  openMenu(): void {
+    this.bottomSheet.open(MenuComponent);
+  }
 }

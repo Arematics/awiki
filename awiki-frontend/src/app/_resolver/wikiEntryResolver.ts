@@ -8,10 +8,10 @@ import {Observable} from 'rxjs';
   providedIn: 'root',
 })
 export class WikiEntryResolver implements Resolve<FullEntry> {
-  constructor(private dataService: WikiDataService, private router: Router) {}
+  constructor(private dataService: WikiDataService) {}
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<FullEntry> | Observable<never> {
     const id = route.paramMap.get('id');
-    return this.dataService.getResource('fullentry/' + id);
+    return this.dataService.getResource('entry/' + id);
   }
 }

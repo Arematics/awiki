@@ -1,5 +1,7 @@
 package com.arematics.wiki.model;
 
+import com.arematics.wiki.json.TitleLengthSerializer;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.sun.istack.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -21,6 +23,7 @@ public class FullEntry implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @JsonSerialize(using= TitleLengthSerializer.class)
     private String title;
     private Integer orderIndex;
     private Timestamp lastChange;

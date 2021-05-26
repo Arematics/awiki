@@ -1,10 +1,14 @@
 package com.arematics.wiki.model;
 
-import lombok.*;
+import com.arematics.wiki.json.TitleLengthSerializer;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Set;
 
 @Getter
 @Setter
@@ -17,9 +21,7 @@ public class MenuGroup implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @JsonSerialize(using= TitleLengthSerializer.class)
     private String title;
     private Integer orderIndex;
-    @OneToMany
-    @JoinColumn(name = "menu_group", referencedColumnName = "id")
-    private Set<SmallEntry> entries;
 }

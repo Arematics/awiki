@@ -5,7 +5,6 @@
 
 #dragDropStatus {
   align-items: center;
-  margin-bottom: 20px;
 }
 
 #dragDropStatus > .dot{
@@ -18,6 +17,12 @@
 
 #groupManagement{
   justify-content: flex-end;
+  margin-bottom: 10px;
+}
+
+#groupName{
+  width: 100%;
+  background-color: transparent;
 }
 
 .dot{

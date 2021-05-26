@@ -42,6 +42,7 @@ import {MatIconModule} from '@angular/material/icon';
 import { WikiEntryBoxComponent } from './components/wiki-entry/wiki-entry-box/wiki-entry-box.component';
 import { EntrydeleteDialogComponent } from './admin/entrydelete-dialog/entrydelete-dialog.component';
 import { GroupdeleteDialogComponent } from './admin/groupdelete-dialog/groupdelete-dialog.component';
+import {MatBottomSheetModule} from '@angular/material/bottom-sheet';
 
 @NgModule({
   declarations: [
@@ -90,7 +91,8 @@ import { GroupdeleteDialogComponent } from './admin/groupdelete-dialog/groupdele
     DragDropModule,
     MatDialogModule,
     MatStepperModule,
-    MatIconModule
+    MatIconModule,
+    MatBottomSheetModule
   ],
   providers: [CookieService, AuthorizationService],
   bootstrap: [AppComponent]

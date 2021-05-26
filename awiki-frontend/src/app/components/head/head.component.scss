@@ -1,5 +1,19 @@
+#head-content{
+  position: relative;
+}
+
+.navMobileButton{
+  position: absolute;
+  left: 10px;
+  display: none;
+}
+
 @media only screen and (max-width: 800px) {
   #head-content{
     text-align: center;
+  }
+
+  .navMobileButton{
+    display: inline-block;
   }
 }

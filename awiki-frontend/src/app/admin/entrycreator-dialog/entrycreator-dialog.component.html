@@ -1,6 +1,6 @@
 <h1 mat-dialog-title>{{exists ? 'Edit' : 'Create new '}} Wiki Entry (Group: {{group.title}})</h1>
 <div mat-dialog-content>
-  <mat-vertical-stepper [linear]="true" #stepper>
+  <mat-vertical-stepper [linear]="!exists">
     <ng-template matStepperIcon="title">
       <mat-icon>title</mat-icon>
     </ng-template>
@@ -22,7 +22,8 @@
                  [value]="titleControl.value"
                  placeholder="Entry Title"
                  formControlName="titleControl"
-                 required>
+                 required
+                 [maxLength]="18">
           <mat-error *ngIf="titleFormGroup.get('titleControl').dirty &&
           !titleFormGroup.get('titleControl').hasError('validateExists')">
             Title already exists in this group
@@ -69,11 +70,12 @@
       <app-entry-box [entryGroup]="group" [entry]="validateData()" textStyleClass="editorStyle"></app-entry-box>
       <div>
         <button mat-button matStepperPrevious>Back</button>
-        <button mat-button (click)="saveEntry()" mat-dialog-close>Save</button>
+        <button mat-button (click)="saveEntry()" [mat-dialog-close]="true">Save</button>
       </div>
     </mat-step>
   </mat-vertical-stepper>
 </div>
 <div mat-dialog-actions>
-  <button mat-raised-button>Interrupt</button>
+  <button mat-raised-button color="primary" [mat-dialog-close]="false">Interrupt</button>
+  <button *ngIf="exists" mat-raised-button color="primary" (click)="saveEntry()" [mat-dialog-close]="true">Save</button>
 </div>

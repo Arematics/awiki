@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {ChangeDetectorRef, Component, OnInit, ViewChild} from '@angular/core';
 import {MenuGroup} from '../../_model/menu.group';
 import {WikiDataService} from '../../_service/wiki.data.service';
 import {map} from 'rxjs/operators';
@@ -10,6 +10,7 @@ import {MatDialog} from '@angular/material/dialog';
 import {EntrycreatorDialogComponent} from '../entrycreator-dialog/entrycreator-dialog.component';
 import {GroupdeleteDialogComponent} from '../groupdelete-dialog/groupdelete-dialog.component';
 import {EntrydeleteDialogComponent} from '../entrydelete-dialog/entrydelete-dialog.component';
+import {Menu} from 'primeng/menu';
 
 @Component({
   selector: 'app-panel',
@@ -18,12 +19,10 @@ import {EntrydeleteDialogComponent} from '../entrydelete-dialog/entrydelete-dial
 })
 export class PanelComponent implements OnInit {
   fetchedGroups: MenuGroup[];
-  fetchedEntries: SmallEntry[] = [];
-  fetchedFullEntry: FullEntry;
   entryOrderChange = false;
   createGroupMode = false;
 
-  constructor(private service: WikiDataService, public dialog: MatDialog) { }
+  constructor(private service: WikiDataService, public dialog: MatDialog, private changeDetection: ChangeDetectorRef) { }
 
   ngOnInit(): void {
     this.fetchGroups();
@@ -36,43 +35,45 @@ export class PanelComponent implements OnInit {
     });
   }
 
-  fetchEntries(groupId: number): void{
-    this.service.getResource('entries/search/findAllByGroup_Id?id=' + groupId)
+  fetchEntries(group: MenuGroup): void{
+    this.service.getResource('entries/search/findAllByGroup_Id?id=' + group.id)
       .pipe(map(data => data._embedded.entries))
       .subscribe(data => {
-        this.fetchedEntries = data;
-        this.fetchedEntries.sort((a, b) => a.orderIndex - b.orderIndex);
+        this.changeDetection.detectChanges();
+        group.entries = data;
+        group.entries.sort((a, b) => a.orderIndex - b.orderIndex);
+        this.changeDetection.detectChanges();
       });
-  }
-
-  fetchData(entryId: number): void{
-    this.service.getResource('fullentry/' + entryId).subscribe(data => this.fetchedFullEntry = data);
   }
 
   drop(event: CdkDragDrop<MenuGroup, any>): void {
     moveItemInArray(this.fetchedGroups, event.previousIndex, event.currentIndex);
     this.fetchedGroups.forEach((item, index) => item.orderIndex = index);
-    this.fetchedGroups.forEach(group => this.service.postResource('group', group).toPromise().then());
+    this.fetchedGroups.forEach(group => {
+      this.service.postResourceNoBody('grouping/updateIndex?id=' + group.id + '&orderIndex=' + group.orderIndex).toPromise().then();
+    });
   }
 
-  dropEntry(event: CdkDragDrop<SmallEntry, any>): void {
-    moveItemInArray(this.fetchedEntries, event.previousIndex, event.currentIndex);
-    this.fetchedEntries.forEach((item, index) => item.orderIndex = index);
-    this.fetchedEntries.forEach(entry => {
-      this.service.getResource('fullentry/' + entry.id).subscribe(result => {
-        result.orderIndex = entry.orderIndex;
-        this.service.postResource('fullentry', result).toPromise().then();
-      });
+  dropEntry(group: MenuGroup, event: CdkDragDrop<SmallEntry, any>): void {
+    moveItemInArray(group.entries, event.previousIndex, event.currentIndex);
+    group.entries.forEach((item, index) => item.orderIndex = index);
+    group.entries.forEach(entry => {
+      this.service.postResourceNoBody('entry/updateIndex?id=' + entry.id + '&orderIndex=' + entry.orderIndex).toPromise().then();
     });
   }
 
   createNewGroup(): void {
     this.createGroupMode = true;
+    setTimeout(() => window.document.getElementById('groupName').focus(), 100);
   }
 
   createNewEntry(group: MenuGroup, entry: FullEntry): void{
     const dialogRef = this.dialog.open(EntrycreatorDialogComponent, {data: {group, entry}});
-    dialogRef.afterClosed().subscribe(() => this.fetchEntries(group.id));
+    dialogRef.afterClosed().subscribe(result => {
+      if ( result ){
+        this.fetchEntries(group);
+      }
+    });
   }
 
   editEntry(group: MenuGroup, entry: SmallEntry): void{
@@ -84,20 +85,19 @@ export class PanelComponent implements OnInit {
       data: {group}
     });
     dialogRef.afterClosed().subscribe(result => {
-      console.log(this.fetchedEntries.length);
-      if ( result && this.fetchedEntries.length <= 0){
+      if ( result && !this.hasEntries(group)){
         this.deleteGroup(group);
       }
     });
   }
 
-  openDeleteEntryDialog(entry: SmallEntry): void{
+  openDeleteEntryDialog(group: MenuGroup, entry: SmallEntry): void{
     const dialogRef = this.dialog.open(EntrydeleteDialogComponent, {
       data: {entry}
     });
     dialogRef.afterClosed().subscribe(result => {
       if ( result ) {
-        this.deleteEntry(entry);
+        this.deleteEntry(group, entry);
       }
     });
   }
@@ -111,16 +111,34 @@ export class PanelComponent implements OnInit {
       });
   }
 
-  deleteEntry(entry: SmallEntry): void{
+  deleteEntry(group: MenuGroup, entry: SmallEntry): void{
     this.service.deleteResource('entries/' + entry.id)
       .toPromise()
       .then(() => {
-        this.fetchedEntries.splice(this.fetchedEntries.indexOf(entry), 1);
-        this.fetchedEntries.forEach((item, index) => item.orderIndex = index);
+        group.entries.splice(group.entries.indexOf(entry), 1);
+        group.entries.forEach((item, index) => item.orderIndex = index);
       });
   }
 
-  sendCreate() {
+  onEnterCreate(event: KeyboardEvent): void {
+    if ( event.key === 'Enter' ){
+      const input: HTMLInputElement = event.target as HTMLInputElement;
+      const value = input.value;
+      if ( this.fetchedGroups.filter(group => group.title === value).length <= 0){
+        const group = {id: null, title: value, orderIndex: this.fetchedGroups.length, entries: []};
+        this.service.postResource('group', group).toPromise().then(result => {
+          this.fetchedGroups.push(result);
+        });
+      }
+      this.createGroupMode = false;
+    }
+  }
 
+  interruptCreate(): void {
+    this.createGroupMode = false;
+  }
+
+  hasEntries(group: MenuGroup): boolean {
+    return group.entries !== undefined && group.entries.length > 0;
   }
 }

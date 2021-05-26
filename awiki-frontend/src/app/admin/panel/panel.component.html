@@ -8,11 +8,16 @@
   </section>
   <section id="groupManagement" class="flexbox">
     <button *ngIf="!createGroupMode" mat-raised-button color="primary" (click)="createNewGroup()">Create New Group</button>
-    <input *ngIf="createGroupMode" matInput #input placeholder="Enter group name..."/>
-    <button *ngIf="createGroupMode" mat-raised-button color="primary" (click)="sendCreate()">Create</button>
+    <input id="groupName"
+           *ngIf="createGroupMode"
+           [maxLength]="18"
+           matInput
+           placeholder="Enter group name..."
+           (keydown)="onEnterCreate($event)"/>
+    <button *ngIf="createGroupMode" mat-raised-button color="primary" (click)="interruptCreate()">Cancel</button>
   </section>
   <mat-accordion cdkDropList class="dropList" (cdkDropListDropped)="drop($event)">
-    <mat-expansion-panel class="dropListItem" *ngFor="let group of fetchedGroups" (opened)="fetchEntries(group.id)"
+    <mat-expansion-panel class="dropListItem" *ngFor="let group of fetchedGroups" (opened)="fetchEntries(group)"
                          cdkDrag
                          [cdkDragDisabled]="!entryOrderChange">
       <mat-expansion-panel-header>
@@ -21,15 +26,15 @@
         </mat-panel-title>
       </mat-expansion-panel-header>
       <ng-template matExpansionPanelContent>
-        <mat-accordion cdkDropList class="dropList" (cdkDropListDropped)="dropEntry($event)">
-          <mat-expansion-panel *ngFor="let entry of fetchedEntries" (opened)="fetchData(entry.id)" cdkDrag
+        <mat-accordion cdkDropList class="dropList" (cdkDropListDropped)="dropEntry(group, $event)">
+          <mat-expansion-panel *ngFor="let entry of group.entries" cdkDrag
                                [cdkDragDisabled]="!entryOrderChange" hideToggle>
             <mat-expansion-panel-header class="groupPanel">
               <mat-panel-title>
                 {{entry.title}}
               </mat-panel-title>
               <mat-action-row>
-                <button mat-raised-button color="primary" (click)="openDeleteEntryDialog(entry)">Delete</button>
+                <button mat-raised-button color="primary" (click)="openDeleteEntryDialog(group, entry)">Delete</button>
                 <button mat-raised-button color="primary" (click)="editEntry(group, entry)">Edit</button>
               </mat-action-row>
             </mat-expansion-panel-header>
@@ -40,7 +45,10 @@
         <button mat-raised-button color="primary" (click)="entryOrderChange = !entryOrderChange">
           Toggle Drag&Drop
         </button>
-        <button mat-raised-button color="primary" [disabled]="fetchedEntries.length > 0" (click)="openDeleteGroupDialog(group)">Delete</button>
+        <button mat-raised-button
+                color="primary"
+                [disabled]="hasEntries(group)"
+                (click)="openDeleteGroupDialog(group)">Delete</button>
         <button mat-raised-button color="primary" (click)="createNewEntry(group, undefined)">Create Entry</button>
       </mat-action-row>
     </mat-expansion-panel>

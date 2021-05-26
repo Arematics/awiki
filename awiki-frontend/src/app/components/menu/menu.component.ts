@@ -18,7 +18,7 @@ export class MenuComponent implements OnInit {
       const data: MenuGroup[] = groups._embedded.group;
       // tslint:disable-next-line:no-shadowed-variable
       data.forEach(group => {
-        this.wikiData.getResource('group/' + group.id + '/entries').subscribe(entries => {
+        this.wikiData.getResource('entries/search/findAllByGroup_Id?id=' + group.id).subscribe(entries => {
           group.entries = entries._embedded.entries;
           group.entries.sort((a, b) => a.orderIndex - b.orderIndex);
           this.groups.push(group);

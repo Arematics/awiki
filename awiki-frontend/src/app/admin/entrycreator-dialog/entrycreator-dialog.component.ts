@@ -32,7 +32,7 @@ export class EntrycreatorDialogComponent implements OnInit {
 
   exists = false;
   content = '';
-  titleControl = new FormControl('', Validators.required);
+  titleControl = new FormControl('', [Validators.required]);
   imageControl = new FormControl('', Validators.required);
   contentControl = new FormControl('', Validators.required);
 
@@ -79,7 +79,7 @@ export class EntrycreatorDialogComponent implements OnInit {
   }
 
   validateData(): FullEntry{
-    const id = this.data.entry !== undefined ? this.data.entry.id : undefined;
+    const id = this.exists ? this.data.entry.id : undefined;
     return {
      id,
      title: this.titleControl.value,
@@ -94,11 +94,13 @@ export class EntrycreatorDialogComponent implements OnInit {
 
   async saveEntry(): Promise<void> {
     const entry = this.validateData();
-    const data: SmallEntry[] = await this.service.getResource('group/' + this.group.id + '/entries')
-      .pipe(map(entries => entries._embedded.entries))
-      .toPromise()
-      .then();
-    entry.orderIndex = Math.max(...data.map(o => o.orderIndex), 0) + 1;
+    if ( !this.exists ){
+      const data: SmallEntry[] = await this.service.getResource('entries/search/findAllByGroup_Id?id=' + this.group.id)
+        .pipe(map(entries => entries._embedded.entries))
+        .toPromise()
+        .then();
+      entry.orderIndex = Math.max(...data.map(o => o.orderIndex), 0) + 1;
+    }
     this.service.postResource('fullentry', entry).toPromise().then();
   }
 }

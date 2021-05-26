@@ -22,6 +22,14 @@ export class WikiDataService{
     return this.http.get(environment.rest_url + resourceUrl, { headers });
   }
 
+  postResourceNoBody(url): Observable<any>{
+    const headers = new HttpHeaders({
+      'Content-type': 'application/json',
+      Authorization: 'Basic ' + this.cookies.get('access_token')
+    });
+    return this.http.post(environment.rest_url + url, { headers });
+  }
+
   postResource(url, resource): Observable<any>{
     const headers = new HttpHeaders({
       'Content-type': 'application/json',

@@ -8,7 +8,7 @@ import {Observable} from 'rxjs';
   providedIn: 'root',
 })
 export class WikiEntryGroupResolver implements Resolve<FullEntry> {
-  constructor(private dataService: WikiDataService, private router: Router) {}
+  constructor(private dataService: WikiDataService) {}
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<FullEntry> | Observable<never> {
     const id = route.paramMap.get('id');

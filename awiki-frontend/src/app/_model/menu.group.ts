@@ -4,5 +4,5 @@ export interface MenuGroup{
   id: number;
   title: string;
   orderIndex: number;
-  entries: SmallEntry[];
+  entries?: SmallEntry[];
 }
