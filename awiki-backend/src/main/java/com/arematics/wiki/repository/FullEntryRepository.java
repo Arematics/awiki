@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 
 import java.util.List;
 
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin
 @RepositoryRestResource(collectionResourceRel = "fullentry", path = "fullentry")
 public interface FullEntryRepository extends JpaRepository<FullEntry, Long> {
     List<FullEntry> findAllByContentContains(@Param("like") String like);

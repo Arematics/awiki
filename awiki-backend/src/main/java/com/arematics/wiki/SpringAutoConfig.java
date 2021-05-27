@@ -13,7 +13,6 @@ import java.util.Optional;
 
 @Configuration
 @EnableJpaRepositories
-@EnableCaching
 @ComponentScan
 @EntityScan
 @EnableJpaAuditing
