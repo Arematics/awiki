@@ -15,11 +15,15 @@
   .spacer{
     display: none;
   }
-  
+
   app-query{
     align-items: center;
     display: flex;
     flex-direction: column;
+  }
+
+  #sidebar{
+    display: none;
   }
 }
 

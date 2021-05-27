@@ -4,6 +4,9 @@
 
 export const environment = {
   production: false,
+  client_secret: 'yourclientsecret',
+  client_id: 'yourclientid',
+  realm_name: 'yourRealmName',
   rest_url: 'http://localhost:8080/api/v1/',
   auth_api: 'http://localhost:8085/',
   redirect_to: 'http://localhost:4200/admin',

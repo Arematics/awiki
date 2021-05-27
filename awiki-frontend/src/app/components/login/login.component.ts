@@ -17,17 +17,19 @@ export class LoginComponent implements OnInit {
     const loggedIn = this.service.checkCredentials();
     const i = window.location.href.indexOf('code');
     if ( !loggedIn && i !== -1) {
-      const val = window.location.href.substring(i + 7);
+      const first = decodeURIComponent(window.location.href);
+      const second = decodeURIComponent(first);
+      const val = second.split('code=')[1].split('&')[0];
       this.service.retrieveToken(val);
     }
   }
 
   login(): void {
-    this.router.queryParams.subscribe(params => {
-      window.location.href = environment.auth_api + 'auth/realms/arematics/protocol/openid-connect/auth?response_type=' +
-        'code&scope=openid%20read%20write&client_id=' +
-        this.service.clientId + '&redirect_uri=' + environment.redirect_to;
-    });
+    window.location.href = environment.auth_api + 'auth/realms/' + environment.realm_name +
+      '/protocol/openid-connect/auth?response_type=code' +
+      '&client_id=' + this.service.clientId +
+      '&scope=openid&roles' +
+      '&redirect_uri=' + environment.redirect_to;
   }
 
   logout(): void {

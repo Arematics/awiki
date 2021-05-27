@@ -6,7 +6,7 @@ import {environment} from '../../environments/environment';
 
 @Injectable()
 export class AuthorizationService{
-  public clientId = 'webpanel';
+  public clientId = environment.client_id;
 
   public userName = 'None';
 
@@ -16,13 +16,13 @@ export class AuthorizationService{
     const params = new URLSearchParams();
     params.append('grant_type', 'authorization_code');
     params.append('client_id', this.clientId);
-    params.append('client_secret', '638d0a30-a139-441c-b0bf-9d719e711e9c');
+    params.append('client_secret', environment.client_secret);
     params.append('redirect_uri', environment.redirect_to);
     params.append('code', code);
 
     const headers = new HttpHeaders({'Content-type': 'application/x-www-form-urlencoded; charset=utf-8'});
 
-    this.http.post(environment.auth_api + 'auth/realms/arematics/protocol/openid-connect/token',
+    this.http.post(environment.auth_api + 'auth/realms/' + environment.realm_name + '/protocol/openid-connect/token',
       params.toString(), { headers })
       .subscribe(
         data => this.saveToken(data),
@@ -43,7 +43,7 @@ export class AuthorizationService{
     const headers = new HttpHeaders({
       'Content-type': 'application/x-www-form-urlencoded; charset=utf-8',
       Authorization: 'Bearer ' + this.cookies.get('access_token')});
-    this.http.get(environment.auth_api + 'auth/realms/arematics/protocol/openid-connect/userinfo', { headers })
+    this.http.get(environment.auth_api + 'auth/realms/' + environment.realm_name + '/protocol/openid-connect/userinfo', { headers })
       .subscribe(
         data => this.userName = data[`preferred_username`],
         err => {

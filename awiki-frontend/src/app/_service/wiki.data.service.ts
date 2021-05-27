@@ -16,8 +16,7 @@ export class WikiDataService{
 
   getResource(resourceUrl): Observable<any> {
     const headers = new HttpHeaders({
-      'Content-type': 'application/json',
-      Authorization: 'Basic ' + this.cookies.get('access_token')
+      'Content-type': 'application/json'
     });
     return this.http.get(environment.rest_url + resourceUrl, { headers });
   }
@@ -25,33 +24,33 @@ export class WikiDataService{
   postResourceNoBody(url): Observable<any>{
     const headers = new HttpHeaders({
       'Content-type': 'application/json',
-      Authorization: 'Basic ' + this.cookies.get('access_token')
+      Authorization: 'Bearer ' + this.cookies.get('access_token')
     });
-    return this.http.post(environment.rest_url + url, { headers });
+    return this.http.post(environment.rest_url + url, {withCredentials: true,  headers });
   }
 
   postResource(url, resource): Observable<any>{
     const headers = new HttpHeaders({
       'Content-type': 'application/json',
-      Authorization: 'Basic ' + this.cookies.get('access_token')
+      Authorization: 'Bearer ' + this.cookies.get('access_token')
     });
-    return this.http.post(environment.rest_url + url, resource, { headers });
+    return this.http.post(environment.rest_url + url, resource, {withCredentials: true,  headers });
   }
 
   putResource(url, resource): Observable<any>{
     const headers = new HttpHeaders({
       'Content-type': 'application/json',
-      Authorization: 'Basic ' + this.cookies.get('access_token')
+      Authorization: 'Bearer ' + this.cookies.get('access_token')
     });
-    return this.http.put(environment.rest_url + url, resource, { headers });
+    return this.http.put(environment.rest_url + url, resource, {withCredentials: true,  headers });
   }
 
   deleteResource(url): Observable<any>{
     const headers = new HttpHeaders({
       'Content-type': 'application/json',
-      Authorization: 'Basic ' + this.cookies.get('access_token')
+      Authorization: 'Bearer ' + this.cookies.get('access_token')
     });
 
-    return this.http.delete(environment.rest_url + url, {headers});
+    return this.http.delete(environment.rest_url + url, {withCredentials: true, headers});
   }
 }
