@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import {APP_INITIALIZER, NgModule} from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
@@ -23,13 +23,11 @@ import {MatOptionModule} from '@angular/material/core';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
-import {FormsModule, NG_ASYNC_VALIDATORS, NG_VALIDATORS, ReactiveFormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {AutoCompleteModule} from 'primeng/autocomplete';
 import {EditorModule} from 'primeng/editor';
 import {TooltipModule} from 'primeng/tooltip';
-import { LoginComponent } from './components/login/login.component';
-import {AuthorizationService} from './_service/authorization.service';
 import {MatButtonModule} from '@angular/material/button';
 import {CookieService} from 'ngx-cookie-service';
 import { PanelComponent } from './admin/panel/panel.component';
@@ -43,6 +41,24 @@ import { WikiEntryBoxComponent } from './components/wiki-entry/wiki-entry-box/wi
 import { EntrydeleteDialogComponent } from './admin/entrydelete-dialog/entrydelete-dialog.component';
 import { GroupdeleteDialogComponent } from './admin/groupdelete-dialog/groupdelete-dialog.component';
 import {MatBottomSheetModule} from '@angular/material/bottom-sheet';
+import {KeycloakAngularModule, KeycloakService} from 'keycloak-angular';
+
+function initializeKeycloak(keycloak: KeycloakService): any {
+  return () =>
+    keycloak.init({
+      config: {
+        url: environment.auth_api,
+        realm: environment.realm_name,
+        clientId: environment.client_id
+      },
+      initOptions: {
+        onLoad: 'check-sso',
+        silentCheckSsoRedirectUri:
+          window.location.origin + '/assets/silent-check-sso.html',
+      },
+      bearerExcludedUrls: ['/assets', '/clients/public'],
+    });
+}
 
 @NgModule({
   declarations: [
@@ -57,7 +73,6 @@ import {MatBottomSheetModule} from '@angular/material/bottom-sheet';
     SafePipe,
     ImpressumComponent,
     GroupComponent,
-    LoginComponent,
     PanelComponent,
     EntrycreatorDialogComponent,
     WikiEntryBoxComponent,
@@ -92,9 +107,15 @@ import {MatBottomSheetModule} from '@angular/material/bottom-sheet';
     MatDialogModule,
     MatStepperModule,
     MatIconModule,
-    MatBottomSheetModule
+    MatBottomSheetModule,
+    KeycloakAngularModule
   ],
-  providers: [CookieService, AuthorizationService],
+  providers: [{
+    provide: APP_INITIALIZER,
+    useFactory: initializeKeycloak,
+    multi: true,
+    deps: [KeycloakService],
+  }],
   bootstrap: [AppComponent]
 })
 export class AppModule {

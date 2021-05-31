@@ -11,6 +11,8 @@ import {EntrycreatorDialogComponent} from '../entrycreator-dialog/entrycreator-d
 import {GroupdeleteDialogComponent} from '../groupdelete-dialog/groupdelete-dialog.component';
 import {EntrydeleteDialogComponent} from '../entrydelete-dialog/entrydelete-dialog.component';
 import {Menu} from 'primeng/menu';
+import {KeycloakProfile} from 'keycloak-js';
+import {KeycloakService} from 'keycloak-angular';
 
 @Component({
   selector: 'app-panel',
@@ -18,14 +20,29 @@ import {Menu} from 'primeng/menu';
   styleUrls: ['./panel.component.scss']
 })
 export class PanelComponent implements OnInit {
+  public isLoggedIn = false;
+  public userProfile: KeycloakProfile | null = null;
+
   fetchedGroups: MenuGroup[];
   entryOrderChange = false;
   createGroupMode = false;
 
-  constructor(private service: WikiDataService, public dialog: MatDialog, private changeDetection: ChangeDetectorRef) { }
+  constructor(private service: WikiDataService,
+              public dialog: MatDialog,
+              private changeDetection: ChangeDetectorRef,
+              private readonly keycloak: KeycloakService) { }
 
-  ngOnInit(): void {
+  public async ngOnInit(): Promise<any> {
     this.fetchGroups();
+    this.isLoggedIn = await this.keycloak.isLoggedIn();
+
+    if (this.isLoggedIn) {
+      // this.userProfile = await this.keycloak.loadUserProfile();
+    }
+  }
+
+  public logout(): void {
+    this.keycloak.logout();
   }
 
   fetchGroups(): void{

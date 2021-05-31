@@ -23,13 +23,17 @@ repositories {
 }
 
 dependencies {
-    compile group: 'org.mariadb.jdbc', name: 'mariadb-java-client', version: '2.7.1'
+    compile 'org.mariadb.jdbc:mariadb-java-client:2.7.1'
 
     //Spring Framework
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: '2.4.4'
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa', version: '2.4.4'
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-rest', version: '2.4.4'
-    compile group: 'org.springframework.boot', name: 'spring-boot-starter-oauth2-resource-server', version: '2.4.4'
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-security', version: '2.4.4'
+    compile group: 'org.keycloak', name: 'keycloak-spring-boot-starter', version: '13.0.1'
+    compile group: 'org.springframework.boot', name: 'spring-boot-devtools', version: '2.4.4'
+    compile group: 'javax.xml.bind', name: 'jaxb-api', version: '2.3.1'
+
 
     //Lombok
     compileOnly group: 'org.projectlombok', name: 'lombok', version: '1.18.16'

@@ -26,6 +26,8 @@
     "@fortawesome/fontawesome-svg-core": "^1.2.35",
     "@fortawesome/free-solid-svg-icons": "^5.15.3",
     "@types/quill": "^2.0.6",
+    "keycloak-angular": "^8.2.0",
+    "keycloak-js": "^13.0.1",
     "ngx-cookie-service": "^11.0.2",
     "primeicons": "^4.1.0",
     "primeng": "^11.4.0",

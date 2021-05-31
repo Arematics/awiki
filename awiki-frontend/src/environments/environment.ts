@@ -4,11 +4,10 @@
 
 export const environment = {
   production: false,
-  client_secret: 'yourclientsecret',
-  client_id: 'yourclientid',
-  realm_name: 'yourRealmName',
+  client_id: 'test',
+  realm_name: 'arematics',
   rest_url: 'http://localhost:8080/api/v1/',
-  auth_api: 'http://localhost:8085/',
+  auth_api: 'https://auth.arematics.com/auth',
   redirect_to: 'http://localhost:4200/admin',
   footerNavigation: [{text: 'Startseite', url: '/'}, {text: 'Impressum', url: '/impressum/'}, {text: 'Panel', url: '/admin/'}]
 };

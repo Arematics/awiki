@@ -1,18 +1,14 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {Observable, of} from 'rxjs';
+import {Observable} from 'rxjs';
 import {environment} from '../../environments/environment';
-import {AbstractControl, AsyncValidatorFn, ValidationErrors} from '@angular/forms';
-import {catchError, map} from 'rxjs/operators';
-import {CookieService} from 'ngx-cookie-service';
-import {hasErrors} from '@angular/compiler-cli/ngcc/src/packages/transformer';
 
 @Injectable({
   providedIn: 'root'
 })
 export class WikiDataService{
 
-  constructor(private http: HttpClient, private cookies: CookieService) {}
+  constructor(private http: HttpClient) {}
 
   getResource(resourceUrl): Observable<any> {
     const headers = new HttpHeaders({
@@ -23,32 +19,28 @@ export class WikiDataService{
 
   postResourceNoBody(url): Observable<any>{
     const headers = new HttpHeaders({
-      'Content-type': 'application/json',
-      Authorization: 'Bearer ' + this.cookies.get('access_token')
+      'Content-type': 'application/json'
     });
     return this.http.post(environment.rest_url + url, {withCredentials: true,  headers });
   }
 
   postResource(url, resource): Observable<any>{
     const headers = new HttpHeaders({
-      'Content-type': 'application/json',
-      Authorization: 'Bearer ' + this.cookies.get('access_token')
+      'Content-type': 'application/json'
     });
     return this.http.post(environment.rest_url + url, resource, {withCredentials: true,  headers });
   }
 
   putResource(url, resource): Observable<any>{
     const headers = new HttpHeaders({
-      'Content-type': 'application/json',
-      Authorization: 'Bearer ' + this.cookies.get('access_token')
+      'Content-type': 'application/json'
     });
     return this.http.put(environment.rest_url + url, resource, {withCredentials: true,  headers });
   }
 
   deleteResource(url): Observable<any>{
     const headers = new HttpHeaders({
-      'Content-type': 'application/json',
-      Authorization: 'Bearer ' + this.cookies.get('access_token')
+      'Content-type': 'application/json'
     });
 
     return this.http.delete(environment.rest_url + url, {withCredentials: true, headers});
