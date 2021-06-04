@@ -67,15 +67,18 @@
       </form>
     </mat-step>
     <mat-step label="Summary" state="summary">
-      <app-entry-box [entryGroup]="group" [entry]="validateData()" textStyleClass="editorStyle"></app-entry-box>
-      <div>
-        <button mat-button matStepperPrevious>Back</button>
-        <button mat-button (click)="saveEntry()" [mat-dialog-close]="true">Save</button>
-      </div>
+      <app-entry-box
+        [entryGroup]="group"
+        [entry]="validateData()"
+        textStyleClass="editorStyle"></app-entry-box>
     </mat-step>
   </mat-vertical-stepper>
 </div>
-<div mat-dialog-actions>
+<div class="actions" mat-dialog-actions>
   <button mat-raised-button color="primary" [mat-dialog-close]="false">Interrupt</button>
-  <button *ngIf="exists" mat-raised-button color="primary" (click)="saveEntry()" [mat-dialog-close]="true">Save</button>
+  <button mat-raised-button
+          color="primary"
+          (click)="saveEntry()"
+          [mat-dialog-close]="true">Save</button>
+  <mat-slide-toggle color="primary" [(ngModel)]="publish">Publish</mat-slide-toggle>
 </div>

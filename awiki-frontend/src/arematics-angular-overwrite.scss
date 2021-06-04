@@ -85,6 +85,21 @@
   color: #e2e2e2;
 }
 
+.mat-button.mat-primary, .mat-icon-button.mat-primary, .mat-stroked-button.mat-primary{
+  color: var(--color-blue-accent);
+}
+
+.mat-button.mat-primary .mat-button-focus-overlay, .mat-icon-button.mat-primary .mat-button-focus-overlay,
+.mat-stroked-button.mat-primary .mat-button-focus-overlay,
+.mat-slide-toggle.mat-primary.mat-checked .mat-slide-toggle-thumb{
+  background-color: var(--color-blue-background);
+}
+
+
+.mat-slide-toggle.mat-primary.mat-checked .mat-slide-toggle-bar{
+  background-color: rgba(12, 63, 171, 0.69);
+}
+
 .p-autocomplete .p-autocomplete-panel{
   background-color: var(--color-background-accent);
   border: none;

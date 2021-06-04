@@ -5,4 +5,5 @@ export interface FullEntry extends SmallEntry {
   image: string;
   content: string;
   calls: number;
+  published: boolean;
 }

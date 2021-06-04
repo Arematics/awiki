@@ -4,12 +4,13 @@
 
 export const environment = {
   production: false,
-  client_id: 'test',
+  client_id: 'arematics-wiki',
   realm_name: 'arematics',
   rest_url: 'http://localhost:8080/api/v1/',
   auth_api: 'https://auth.arematics.com/auth',
   redirect_to: 'http://localhost:4200/admin',
-  footerNavigation: [{text: 'Startseite', url: '/'}, {text: 'Impressum', url: '/impressum/'}, {text: 'Panel', url: '/admin/'}]
+  footerNavigation: [{text: 'Startseite', url: '/'}, {text: 'Impressum', url: '/impressum/'},
+    {text: 'Datenschutz', url: '/privacy/'}, {text: 'Panel', url: '/admin/'}]
 };
 
 /*

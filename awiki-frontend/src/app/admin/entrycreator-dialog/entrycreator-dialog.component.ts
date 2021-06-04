@@ -29,6 +29,7 @@ export class EntrycreatorDialogComponent implements OnInit {
   imageFormGroup: FormGroup;
   contentFormGroup: FormGroup;
   image = '';
+  publish = false;
 
   exists = false;
   content = '';
@@ -54,13 +55,14 @@ export class EntrycreatorDialogComponent implements OnInit {
       this.contentControl.patchValue(this.data.entry.content);
       this.content = this.data.entry.content;
       this.image = this.data.entry.image;
+      this.publish = this.data.entry.published;
     } else {
       this.titleControl.setAsyncValidators(this.validateExists.bind(this));
     }
   }
 
   private validateExists(component: FormControl): Observable<{ exists: boolean } | ValidationErrors> {
-    return this.service.getResource('entries/search/existsByTitleAndGroup_Id?title=' + component.value + '&id=' + this.group.id)
+    return this.service.getResource('entry/existsByTitleAndGroup?title=' + component.value + '&id=' + this.group.id)
       .pipe(map(isTaken => isTaken ? of('validateExists') : isTaken), catchError(() => of('validateExists')));
   }
 
@@ -88,19 +90,19 @@ export class EntrycreatorDialogComponent implements OnInit {
      menuGroup: this.group.id,
      image: this.image,
      content: this.contentControl.value,
-     calls: 0
+     calls: 0,
+     published: this.publish
    };
   }
 
   async saveEntry(): Promise<void> {
     const entry = this.validateData();
     if ( !this.exists ){
-      const data: SmallEntry[] = await this.service.getResource('entries/search/findAllByGroup_Id?id=' + this.group.id)
-        .pipe(map(entries => entries._embedded.entries))
+      const data: SmallEntry[] = await this.service.getResource('entry/childrenOfGroup/' + this.group.id)
         .toPromise()
         .then();
       entry.orderIndex = Math.max(...data.map(o => o.orderIndex), 0) + 1;
     }
-    this.service.postResource('fullentry', entry).toPromise().then();
+    this.service.postResource('entry', entry).toPromise().then();
   }
 }

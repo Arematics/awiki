@@ -23,8 +23,8 @@ export class HomeComponent implements OnInit {
   }
 
   fetchResults(): Promise<FullEntry[]>{
-    return this.wikiService.getResource('fullentry?size=6&sort=calls,desc')
-      .pipe(map(result => result._embedded.fullentry))
+    return this.wikiService.getResource('entry')
+      .pipe(map(result => result))
       .toPromise();
   }
 

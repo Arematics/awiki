@@ -117,8 +117,8 @@ a {
 
 //Button Style
 .styledButton{
-  background-color: var(--color-blue-accent);
-  color: black;
+  background-color: var(--color-blue-background);
+  color: white;
   width: 100%;
   max-width: 250px;
 }
@@ -168,10 +168,6 @@ hr{
 @media only screen and (max-width: 600px) {
   .bodyContent{
     margin-top: 2rem;
-  }
-
-  mat-bottom-sheet-container{
-    margin-bottom: 60%;
   }
 }
 

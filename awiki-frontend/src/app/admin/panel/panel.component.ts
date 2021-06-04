@@ -53,8 +53,7 @@ export class PanelComponent implements OnInit {
   }
 
   fetchEntries(group: MenuGroup): void{
-    this.service.getResource('entries/search/findAllByGroup_Id?id=' + group.id)
-      .pipe(map(data => data._embedded.entries))
+    this.service.getResource('entry/childrenOfGroup/' + group.id)
       .subscribe(data => {
         this.changeDetection.detectChanges();
         group.entries = data;
@@ -67,7 +66,7 @@ export class PanelComponent implements OnInit {
     moveItemInArray(this.fetchedGroups, event.previousIndex, event.currentIndex);
     this.fetchedGroups.forEach((item, index) => item.orderIndex = index);
     this.fetchedGroups.forEach(group => {
-      this.service.postResourceNoBody('grouping/updateIndex?id=' + group.id + '&orderIndex=' + group.orderIndex).toPromise().then();
+      this.service.postResourceNoBody('grouping/update/index?id=' + group.id + '&orderIndex=' + group.orderIndex).toPromise().then();
     });
   }
 
@@ -75,7 +74,7 @@ export class PanelComponent implements OnInit {
     moveItemInArray(group.entries, event.previousIndex, event.currentIndex);
     group.entries.forEach((item, index) => item.orderIndex = index);
     group.entries.forEach(entry => {
-      this.service.postResourceNoBody('entry/updateIndex?id=' + entry.id + '&orderIndex=' + entry.orderIndex).toPromise().then();
+      this.service.postResourceNoBody('entry/update/index?id=' + entry.id + '&orderIndex=' + entry.orderIndex).toPromise().then();
     });
   }
 
@@ -94,7 +93,7 @@ export class PanelComponent implements OnInit {
   }
 
   editEntry(group: MenuGroup, entry: SmallEntry): void{
-    this.service.getResource('fullentry/' + entry.id).subscribe(data => this.createNewEntry(group, data));
+    this.service.getResource('entry/' + entry.id).subscribe(data => this.createNewEntry(group, data));
   }
 
   openDeleteGroupDialog(group: MenuGroup): void{
@@ -129,7 +128,7 @@ export class PanelComponent implements OnInit {
   }
 
   deleteEntry(group: MenuGroup, entry: SmallEntry): void{
-    this.service.deleteResource('entries/' + entry.id)
+    this.service.deleteResource('entry/' + entry.id)
       .toPromise()
       .then(() => {
         group.entries.splice(group.entries.indexOf(entry), 1);

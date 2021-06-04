@@ -1,0 +1,10 @@
+<section id="cookie-alert">
+  <h2>Cookies</h2>
+  <p>This pages uses cookies to improve your experience. By continuing to use the website,
+    you agree to the use of cookies. Read more about our cookie policy
+    <a [routerLink]="['privacy']" fragment="cookies" class="link">here</a>
+  </p>
+  <div class="buttons">
+    <button mat-raised-button color="primary" (click)="allowCookies()">Allow Cookies</button>
+  </div>
+</section>

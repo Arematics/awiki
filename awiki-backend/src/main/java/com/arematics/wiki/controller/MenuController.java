@@ -8,17 +8,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.security.RolesAllowed;
 import java.util.Optional;
 
 @CrossOrigin
 @RestController
-@RequestMapping("/grouping/")
+@RequestMapping("/grouping")
 @RequiredArgsConstructor(onConstructor_=@Autowired)
 public class MenuController {
 
     private final MenuGroupRepository menuGroupRepository;
 
-    @PostMapping("updateIndex")
+    @RolesAllowed("admin")
+    @PostMapping("/update/index")
     public ResponseEntity<MenuGroup> updateOrderIndex(@RequestParam Long id, @RequestParam int orderIndex){
         Optional<MenuGroup> entry = menuGroupRepository.findById(id);
         if(entry.isPresent()){

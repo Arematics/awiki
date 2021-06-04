@@ -22,6 +22,7 @@ public class SmallEntry implements Serializable {
     @JsonSerialize(using= TitleLengthSerializer.class)
     private String title;
     private Integer orderIndex;
+    private boolean published;
     private Timestamp lastChange;
     @ManyToOne
     @JoinColumn(name = "menu_group")

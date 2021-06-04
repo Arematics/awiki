@@ -52,8 +52,8 @@ export class QueryComponent implements OnInit {
 
   fetchResultItemsByTitle(input): Promise<ResultItem[]>{
     input = input.indexOf('title: ') === 0 ? input.substr(input.indexOf(' ') + 1) : input;
-    return this.wikiService.getResource('fullentry/search/findAllByTitleContains?title=' + input)
-      .pipe(map(result => result._embedded.fullentry.map(entry =>
+    return this.wikiService.getResource('entry/findAllByTitle?title=' + input)
+      .pipe(map(result => result.map(entry =>
         new ResultItem(entry.title.toUpperCase().replace(input.toUpperCase(),
           '<b style="color: var(--color-blue-accent)">' + input + '</b>'),
           entry.content.substr(0, 200) + ' ...', entry.id))))
@@ -62,8 +62,8 @@ export class QueryComponent implements OnInit {
 
   fetchResultItemsByContent(input): Promise<ResultItem[]>{
     input = input.indexOf('text: ') === 0 ? input.substr(input.indexOf(' ') + 1) : input;
-    return this.wikiService.getResource('fullentry/search/findAllByContentContains?like=' + input)
-      .pipe(map(result => result._embedded.fullentry.map(entry => {
+    return this.wikiService.getResource('entry/findAllByContent?like=' + input)
+      .pipe(map(result => result.map(entry => {
         const content = entry.content;
         const first = content.indexOf(input);
         const end = content.indexOf(' ', first + input.length);

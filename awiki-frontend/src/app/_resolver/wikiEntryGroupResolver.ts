@@ -12,6 +12,6 @@ export class WikiEntryGroupResolver implements Resolve<FullEntry> {
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<FullEntry> | Observable<never> {
     const id = route.paramMap.get('id');
-    return this.dataService.getResource('entries/' + id + '/group');
+    return this.dataService.getResource('entry/' + id + '/group');
   }
 }

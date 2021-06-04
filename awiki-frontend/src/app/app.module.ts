@@ -42,6 +42,10 @@ import { EntrydeleteDialogComponent } from './admin/entrydelete-dialog/entrydele
 import { GroupdeleteDialogComponent } from './admin/groupdelete-dialog/groupdelete-dialog.component';
 import {MatBottomSheetModule} from '@angular/material/bottom-sheet';
 import {KeycloakAngularModule, KeycloakService} from 'keycloak-angular';
+import { CookieAlertComponent } from './components/cookie-alert/cookie-alert.component';
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+import { PrivacyComponent } from './components/privacy/privacy.component';
+import {AdsenseModule} from 'ng2-adsense';
 
 function initializeKeycloak(keycloak: KeycloakService): any {
   return () =>
@@ -51,11 +55,11 @@ function initializeKeycloak(keycloak: KeycloakService): any {
         realm: environment.realm_name,
         clientId: environment.client_id
       },
-      initOptions: {
+      /*initOptions: {
         onLoad: 'check-sso',
         silentCheckSsoRedirectUri:
           window.location.origin + '/assets/silent-check-sso.html',
-      },
+      },*/
       bearerExcludedUrls: ['/assets', '/clients/public'],
     });
 }
@@ -77,7 +81,9 @@ function initializeKeycloak(keycloak: KeycloakService): any {
     EntrycreatorDialogComponent,
     WikiEntryBoxComponent,
     EntrydeleteDialogComponent,
-    GroupdeleteDialogComponent
+    GroupdeleteDialogComponent,
+    CookieAlertComponent,
+    PrivacyComponent
   ],
   imports: [
     BrowserModule,
@@ -108,9 +114,13 @@ function initializeKeycloak(keycloak: KeycloakService): any {
     MatStepperModule,
     MatIconModule,
     MatBottomSheetModule,
-    KeycloakAngularModule
+    KeycloakAngularModule,
+    MatSlideToggleModule,
+    AdsenseModule.forRoot({
+      adClient: 'ca-pub-8838466162667140'
+    })
   ],
-  providers: [{
+  providers: [CookieService, {
     provide: APP_INITIALIZER,
     useFactory: initializeKeycloak,
     multi: true,

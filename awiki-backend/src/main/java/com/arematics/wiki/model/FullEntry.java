@@ -26,6 +26,7 @@ public class FullEntry implements Serializable {
     @JsonSerialize(using= TitleLengthSerializer.class)
     private String title;
     private Integer orderIndex;
+    private boolean published;
     private Timestamp lastChange;
     @Column(name = "menu_group")
     private Long menuGroup;
