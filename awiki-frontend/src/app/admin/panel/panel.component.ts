@@ -37,7 +37,8 @@ export class PanelComponent implements OnInit {
     this.isLoggedIn = await this.keycloak.isLoggedIn();
 
     if (this.isLoggedIn) {
-      // this.userProfile = await this.keycloak.loadUserProfile();
+      this.userProfile = await this.keycloak.loadUserProfile();
+      this.userProfile.id = this.keycloak.getKeycloakInstance().subject;
     }
   }
 
@@ -84,7 +85,10 @@ export class PanelComponent implements OnInit {
   }
 
   createNewEntry(group: MenuGroup, entry: FullEntry): void{
-    const dialogRef = this.dialog.open(EntrycreatorDialogComponent, {data: {group, entry}});
+    const dialogRef = this.dialog.open(EntrycreatorDialogComponent, {
+      data: {group, entry, userProfile: this.userProfile},
+      maxWidth: '100vw'
+    });
     dialogRef.afterClosed().subscribe(result => {
       if ( result ){
         this.fetchEntries(group);
@@ -98,7 +102,8 @@ export class PanelComponent implements OnInit {
 
   openDeleteGroupDialog(group: MenuGroup): void{
     const dialogRef = this.dialog.open(GroupdeleteDialogComponent, {
-      data: {group}
+      data: {group},
+      maxWidth: '100vw'
     });
     dialogRef.afterClosed().subscribe(result => {
       if ( result && !this.hasEntries(group)){
@@ -109,7 +114,8 @@ export class PanelComponent implements OnInit {
 
   openDeleteEntryDialog(group: MenuGroup, entry: SmallEntry): void{
     const dialogRef = this.dialog.open(EntrydeleteDialogComponent, {
-      data: {entry}
+      data: {entry},
+      maxWidth: '101vw'
     });
     dialogRef.afterClosed().subscribe(result => {
       if ( result ) {

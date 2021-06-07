@@ -120,3 +120,39 @@
   background-color: var(--color-background);
   font-family: SansSerif, sans-serif;
 }
+
+@media only screen and (max-width: 800px) {
+
+  .mat-dialog-content{
+    max-height: 75vh !important;
+  }
+
+  .cdk-global-overlay-wrapper{
+    align-items: normal !important;
+  }
+
+  .mat-dialog-actions{
+    width: 100%;
+    z-index: 3000;
+    position: absolute;
+    bottom: 20px;
+    -webkit-backdrop-filter: saturate(180%) blur(20px);
+    backdrop-filter: saturate(180%) blur(20px);
+  }
+
+  .mat-dialog-container{
+    border-radius: 0 !important;
+  }
+
+  .mat-expansion-panel{
+    width: 100%;
+  }
+
+  .mat-expansion-panel-content > .mat-action-row{
+    padding-left: 0;
+  }
+
+  .cdk-overlay-pane{
+    width: 100vw;
+  }
+}

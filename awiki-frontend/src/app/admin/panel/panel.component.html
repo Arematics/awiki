@@ -4,10 +4,15 @@
   </section>
   <section id="dragDropStatus" class="flexbox">
     <h3>Drag & Drop Status: </h3>
-    <div class="dot {{entryOrderChange ? 'dragDropEnabled' : 'dragDropDisabled'}}"></div>
+    <div class="dot {{entryOrderChange ? 'dragDropEnabled' : 'dragDropDisabled'}}"
+         (click)="entryOrderChange = !entryOrderChange"></div>
   </section>
   <section id="groupManagement" class="flexbox">
-    <button *ngIf="!createGroupMode" mat-raised-button color="primary" (click)="createNewGroup()">Create New Group</button>
+    <button *ngIf="!createGroupMode"
+            mat-raised-button
+            color="primary"
+            class="createGroupButton"
+            (click)="createNewGroup()">Create New Group</button>
     <input id="groupName"
            *ngIf="createGroupMode"
            [maxLength]="18"

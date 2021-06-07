@@ -46,6 +46,7 @@ import { CookieAlertComponent } from './components/cookie-alert/cookie-alert.com
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import { PrivacyComponent } from './components/privacy/privacy.component';
 import {AdsenseModule} from 'ng2-adsense';
+import {MatTooltipModule} from '@angular/material/tooltip';
 
 function initializeKeycloak(keycloak: KeycloakService): any {
   return () =>
@@ -118,7 +119,8 @@ function initializeKeycloak(keycloak: KeycloakService): any {
     MatSlideToggleModule,
     AdsenseModule.forRoot({
       adClient: 'ca-pub-8838466162667140'
-    })
+    }),
+    MatTooltipModule
   ],
   providers: [CookieService, {
     provide: APP_INITIALIZER,

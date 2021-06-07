@@ -9,6 +9,7 @@ import {catchError, map} from 'rxjs/operators';
 import {FullEntry} from '../../_model/fullEntry';
 import {STEPPER_GLOBAL_OPTIONS} from '@angular/cdk/stepper';
 import {SmallEntry} from '../../_model/smallEntry';
+import {EntryMetadata} from '../../_model/entryMetaData';
 
 interface CustomForm{
   value: string;
@@ -33,9 +34,14 @@ export class EntrycreatorDialogComponent implements OnInit {
 
   exists = false;
   content = '';
+  creatorId = '';
+  changes = 0;
   titleControl = new FormControl('', [Validators.required]);
   imageControl = new FormControl('', Validators.required);
   contentControl = new FormControl('', Validators.required);
+
+  metaData: EntryMetadata[] = [];
+  result: FullEntry;
 
   constructor(public dialogRef: MatDialogRef<EntrycreatorDialogComponent>,
               @Inject(MAT_DIALOG_DATA) public data: EntryCreatorData,
@@ -43,7 +49,7 @@ export class EntrycreatorDialogComponent implements OnInit {
               private service: WikiDataService) {
   }
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
     this.group = this.data.group;
     this.titleFormGroup = this.formBuilder.group({titleControl: this.titleControl}, { updateOn: 'blur' });
     this.imageFormGroup = this.formBuilder.group({imageControl: this.imageControl});
@@ -80,6 +86,10 @@ export class EntrycreatorDialogComponent implements OnInit {
     this.image = 'data:image/png;base64,' + btoa(this.image);
   }
 
+  isInvalidFormExists(): boolean{
+    return this.titleFormGroup.invalid || this.imageFormGroup.invalid || this.contentFormGroup.invalid;
+  }
+
   validateData(): FullEntry{
     const id = this.exists ? this.data.entry.id : undefined;
     return {
@@ -89,13 +99,15 @@ export class EntrycreatorDialogComponent implements OnInit {
      lastChange: new Date(),
      menuGroup: this.group.id,
      image: this.image,
-     content: this.contentControl.value,
-     calls: 0,
-     published: this.publish
-   };
+     content: this.contentControl.value, published: this.publish,
+     calls: 0
+    };
   }
 
   async saveEntry(): Promise<void> {
+    if (this.isInvalidFormExists()){
+      return;
+    }
     const entry = this.validateData();
     if ( !this.exists ){
       const data: SmallEntry[] = await this.service.getResource('entry/childrenOfGroup/' + this.group.id)
@@ -103,6 +115,24 @@ export class EntrycreatorDialogComponent implements OnInit {
         .then();
       entry.orderIndex = Math.max(...data.map(o => o.orderIndex), 0) + 1;
     }
-    this.service.postResource('entry', entry).toPromise().then();
+    const result = await this.service.postResource('entry', entry).toPromise();
+    if ( !this.exists ){
+      const creator = {id: null, entryId: result.id, name: 'creator', value: this.data.userProfile.id};
+      const createdAt =  {id: null, entryId: result.id, name: 'createdAt', value: new Date()};
+      this.service.postResource('metadata', creator).toPromise().then();
+      this.service.postResource('metadata', createdAt).toPromise().then();
+    }
+    const newChanges = {id: null, entryId: result.id, name: 'changes', value: 0};
+    const changes = await this.service.getResource(`metadata/search/findByEntryIdAndName?entryId=${result.id}&name=changes`)
+      .toPromise()
+      .then(data => data, err => newChanges);
+    changes.value++;
+    this.service.postResource('metadata', changes).toPromise().then();
+    const newEditor = {id: null, entryId: result.id, name: 'lastEditor', value: this.data.userProfile.id};
+    const lastEditor = await this.service.getResource(`metadata/search/findByEntryIdAndName?entryId=${result.id}&name=lastEditor`)
+      .toPromise()
+      .then(data => data, err => newEditor);
+    lastEditor.value = this.data.userProfile.id;
+    this.service.postResource('metadata', lastEditor).toPromise().then();
   }
 }

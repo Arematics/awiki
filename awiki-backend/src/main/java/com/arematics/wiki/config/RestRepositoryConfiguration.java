@@ -1,5 +1,6 @@
 package com.arematics.wiki.config;
 
+import com.arematics.wiki.model.EntryMetadata;
 import com.arematics.wiki.model.MenuGroup;
 import com.arematics.wiki.model.SmallEntry;
 import com.arematics.wiki.model.FullEntry;
@@ -16,5 +17,6 @@ public class RestRepositoryConfiguration implements RepositoryRestConfigurer {
         config.exposeIdsFor(MenuGroup.class);
         config.exposeIdsFor(SmallEntry.class);
         config.exposeIdsFor(FullEntry.class);
+        config.exposeIdsFor(EntryMetadata.class);
     }
 }

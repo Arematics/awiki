@@ -31,6 +31,13 @@ export class WikiDataService{
     return this.http.post(environment.rest_url + url, resource, {withCredentials: true,  headers });
   }
 
+  patchResource(url, resource): Observable<any>{
+    const headers = new HttpHeaders({
+      'Content-type': 'application/json'
+    });
+    return this.http.patch(environment.rest_url + url, resource, {withCredentials: true,  headers });
+  }
+
   putResource(url, resource): Observable<any>{
     const headers = new HttpHeaders({
       'Content-type': 'application/json'

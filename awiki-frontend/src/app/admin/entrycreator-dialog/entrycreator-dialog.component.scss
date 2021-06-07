@@ -9,3 +9,10 @@
 .actions > *{
   margin-left: 5px;
 }
+
+@media only screen and (max-width: 800px) {
+  .stepper{
+    max-width: 100%;
+    width: 100%;
+  }
+}

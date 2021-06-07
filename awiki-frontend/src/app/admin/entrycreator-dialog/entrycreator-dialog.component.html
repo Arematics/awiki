@@ -1,6 +1,6 @@
 <h1 mat-dialog-title>{{exists ? 'Edit' : 'Create new '}} Wiki Entry (Group: {{group.title}})</h1>
 <div mat-dialog-content>
-  <mat-vertical-stepper [linear]="!exists">
+  <mat-vertical-stepper [linear]="!exists" class="stepper">
     <ng-template matStepperIcon="title">
       <mat-icon>title</mat-icon>
     </ng-template>
@@ -59,7 +59,8 @@
     </mat-step>
     <mat-step [stepControl]="contentFormGroup" label="Write content" state="content">
       <form [formGroup]="contentFormGroup">
-        <p-editor formControlName="contentControl"></p-editor>
+        <p-editor formControlName="contentControl">
+        </p-editor>
         <div>
           <button mat-button matStepperPrevious>Back</button>
           <button mat-button matStepperNext>Next</button>
@@ -78,6 +79,7 @@
   <button mat-raised-button color="primary" [mat-dialog-close]="false">Interrupt</button>
   <button mat-raised-button
           color="primary"
+          [disabled]="isInvalidFormExists()"
           (click)="saveEntry()"
           [mat-dialog-close]="true">Save</button>
   <mat-slide-toggle color="primary" [(ngModel)]="publish">Publish</mat-slide-toggle>

@@ -16,12 +16,12 @@
 }
 
 #groupManagement{
-  justify-content: flex-end;
   margin-bottom: 10px;
+  justify-content: flex-end;
 }
 
 #groupName{
-  width: 100%;
+  flex: 1;
   background-color: transparent;
 }
 
@@ -43,4 +43,21 @@
 .groupPanel .mat-action-row{
   padding: 0;
   border-top: 0;
+}
+
+
+
+@media only screen and (max-width: 800px) {
+
+  #dragDropStatus{
+    margin-bottom: 10px;
+  }
+
+  .createGroupButton{
+    width: 100%;
+  }
+
+  #groupManagement{
+    margin-bottom: 30px;
+  }
 }

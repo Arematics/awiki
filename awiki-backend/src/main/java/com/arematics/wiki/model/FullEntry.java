@@ -2,12 +2,10 @@ package com.arematics.wiki.model;
 
 import com.arematics.wiki.json.TitleLengthSerializer;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.sun.istack.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
 import java.io.Serializable;
