@@ -15,6 +15,6 @@ We will also not give you access to POST resources there, so you won't be able t
 You will also need to set up the Spring backend using Docker. The Gradle task "bootBuildImage" will generate your Docker image.
 
 ### Frontend
-Build your Angular frontend using the command "ng build --prod --output-hashing=all" and deploy it to the specified html path on your web server.
+First of all modify your [Angular Prod Environment File](awiki-frontend/src/environments/environment.prod.ts). You need to define your RESTful Backend Link and all the data for your keycloak client.
 
-Translated with www.DeepL.com/Translator (free version)
+Build your Angular frontend using the command "ng build --prod --output-hashing=all" and deploy it to the specified html path on your web server.
