@@ -1,6 +1,5 @@
 package com.arematics.wiki.controller;
 
-import com.arematics.wiki.model.FullEntry;
 import com.arematics.wiki.model.MenuGroup;
 import com.arematics.wiki.repository.MenuGroupRepository;
 import lombok.RequiredArgsConstructor;

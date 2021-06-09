@@ -118,7 +118,17 @@
 .p-editor-container > .ql-container.ql-snow > .ql-editor{
   color: var(--color-text);
   background-color: var(--color-background);
-  font-family: SansSerif, sans-serif;
+  font-family: SansSerif, sans-serif;font-size: 1.4em;
+}
+
+.fullSizePanel{
+  width: 100%;
+  height: 100%;
+}
+
+.fullSizePanel .mat-dialog-container{
+  width: 100%;
+  height: 100%;
 }
 
 @media only screen and (max-width: 800px) {
@@ -127,11 +137,8 @@
     max-height: 75vh !important;
   }
 
-  .cdk-global-overlay-wrapper{
-    align-items: normal !important;
-  }
-
   .mat-dialog-actions{
+    left: 0;
     width: 100%;
     z-index: 3000;
     position: absolute;
@@ -152,7 +159,13 @@
     padding-left: 0;
   }
 
-  .cdk-overlay-pane{
-    width: 100vw;
+  .fullSizeOnMobile{
+    width: 100%;
+    height: 100%;
+  }
+
+  .fullSizeOnMobile .mat-dialog-container{
+    width: 100%;
+    height: 100%;
   }
 }

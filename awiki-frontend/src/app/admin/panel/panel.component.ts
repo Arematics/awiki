@@ -87,7 +87,8 @@ export class PanelComponent implements OnInit {
   createNewEntry(group: MenuGroup, entry: FullEntry): void{
     const dialogRef = this.dialog.open(EntrycreatorDialogComponent, {
       data: {group, entry, userProfile: this.userProfile},
-      maxWidth: '100vw'
+      maxWidth: '100vw',
+      panelClass: 'fullSizeOnMobile'
     });
     dialogRef.afterClosed().subscribe(result => {
       if ( result ){
@@ -103,7 +104,8 @@ export class PanelComponent implements OnInit {
   openDeleteGroupDialog(group: MenuGroup): void{
     const dialogRef = this.dialog.open(GroupdeleteDialogComponent, {
       data: {group},
-      maxWidth: '100vw'
+      maxWidth: '100vw',
+      panelClass: 'fullSizeOnMobile'
     });
     dialogRef.afterClosed().subscribe(result => {
       if ( result && !this.hasEntries(group)){
@@ -115,7 +117,8 @@ export class PanelComponent implements OnInit {
   openDeleteEntryDialog(group: MenuGroup, entry: SmallEntry): void{
     const dialogRef = this.dialog.open(EntrydeleteDialogComponent, {
       data: {entry},
-      maxWidth: '101vw'
+      maxWidth: '100vw',
+      panelClass: 'fullSizeOnMobile'
     });
     dialogRef.afterClosed().subscribe(result => {
       if ( result ) {

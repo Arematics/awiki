@@ -42,6 +42,7 @@ export class EntrycreatorDialogComponent implements OnInit {
 
   metaData: EntryMetadata[] = [];
   result: FullEntry;
+  fullSize = false;
 
   constructor(public dialogRef: MatDialogRef<EntrycreatorDialogComponent>,
               @Inject(MAT_DIALOG_DATA) public data: EntryCreatorData,
@@ -102,6 +103,16 @@ export class EntrycreatorDialogComponent implements OnInit {
      content: this.contentControl.value, published: this.publish,
      calls: 0
     };
+  }
+
+  fullScreenSwitch(): void{
+    if ( this.fullSize ){
+      this.fullSize = false;
+      this.dialogRef.removePanelClass('fullSizePanel');
+    }else {
+      this.fullSize = true;
+      this.dialogRef.addPanelClass('fullSizePanel');
+    }
   }
 
   async saveEntry(): Promise<void> {

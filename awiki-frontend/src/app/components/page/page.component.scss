@@ -2,6 +2,11 @@
   width: 80%;
 }
 
+#sidebar{
+  display: flex;
+  flex-direction: row;
+}
+
 .spacer{
   padding-left: 15px;
   margin-right: 25px;

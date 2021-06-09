@@ -1,4 +1,9 @@
-<h1 mat-dialog-title>{{exists ? 'Edit' : 'Create new '}} Wiki Entry (Group: {{group.title}})</h1>
+<div class="flexbox">
+  <h1 style="flex: 1" mat-dialog-title>{{exists ? 'Edit' : 'Create new '}} Wiki Entry (Group: {{group.title}})</h1>
+  <button mat-icon-button (click)="fullScreenSwitch()">
+    <mat-icon>aspect_ratio</mat-icon>
+  </button>
+</div>
 <div mat-dialog-content>
   <mat-vertical-stepper [linear]="!exists" class="stepper">
     <ng-template matStepperIcon="title">
