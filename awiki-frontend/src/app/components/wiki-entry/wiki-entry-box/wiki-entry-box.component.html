@@ -13,7 +13,9 @@
     </div>
     <img src="{{entry.image}}" alt="{{entry.title}} Image"/>
   </div>
-  <p-editor [(ngModel)]="entry.content" readonly="true" [style]="{'min-height':'200px'}" [styleClass]="textStyleClass">
-    <p-header> </p-header>
-  </p-editor>
+  <div class="textContainer">
+    <p-editor [(ngModel)]="entry.content" [modules]="modules" readonly="true" [style]="{'min-height':'200px'}" [styleClass]="textStyleClass">
+      <p-header> </p-header>
+    </p-editor>
+  </div>
 </section>

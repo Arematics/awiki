@@ -1,6 +1,6 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
-import {GroupDeleteData} from '../group.delete.data';
+import {GroupDeleteData} from '../../_model/group.delete.data';
 
 @Component({
   selector: 'app-groupdelete-dialog',

@@ -1,35 +1,38 @@
-<article id="sidebar">
-  <section id="menu">
-    <app-menu *ngIf="isVisible"></app-menu>
-  </section>
-  <mat-divider vertical class="spacer"></mat-divider>
-</article>
+<div class="{{isVisible ? 'big-container' : 'container'}} flexbox page">
+  <article id="sidebar" *ngIf="isVisible">
+    <section id="menu">
+      <app-menu></app-menu>
+    </section>
+    <mat-divider vertical class="spacer"></mat-divider>
+  </article>
 
 
-<article id="content">
-  <section id="query">
-    <app-query></app-query>
-  </section>
-  <section id="page-content">
-    <ng-content></ng-content>
-  </section>
-</article>
+  <article id="content" style="{{!adsVisible ? 'width: 100%' : ''}}">
+    <section id="query" *ngIf="queryVisible">
+      <app-query></app-query>
+    </section>
+    <section id="page-content">
+      <ng-content></ng-content>
+    </section>
+  </article>
 
-<article id="ads">
-  <ng-adsense
-    [adClient]="'ca-pub-8838466162667140'"
-    [adSlot]="4864221702"
-    [display]="'block'"
-    [height]="108"
-    [adFormat]="'auto'"
-    [fullWidthResponsive]="true"
-  ></ng-adsense>
-  <ng-adsense
-    [adClient]="'ca-pub-8838466162667140'"
-    [adSlot]="6514067493"
-    [display]="'block'"
-    [height]="108"
-    [adFormat]="'auto'"
-    [fullWidthResponsive]="true"
-  ></ng-adsense>
-</article>
+  <article id="ads" *ngIf="adsVisible">
+    <ng-adsense
+      [adClient]="'ca-pub-8838466162667140'"
+      [adSlot]="4864221702"
+      [display]="'block'"
+      [height]="108"
+      [adFormat]="'auto'"
+      [fullWidthResponsive]="true"
+    ></ng-adsense>
+    <ng-adsense
+      [adClient]="'ca-pub-8838466162667140'"
+      [adSlot]="6514067493"
+      [display]="'block'"
+      [height]="108"
+      [adFormat]="'auto'"
+      [fullWidthResponsive]="true"
+    ></ng-adsense>
+  </article>
+
+</div>

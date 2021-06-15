@@ -1,15 +1,15 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {MenuGroup} from '../../_model/menu.group';
+import {MenuGroup} from '../../../_model/menu.group';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
-import {EntryCreatorData} from '../entry.creator.data';
+import {EntryCreatorData} from '../../_model/entry.creator.data';
 import {FormBuilder, FormControl, FormGroup, ValidationErrors, Validators} from '@angular/forms';
-import {WikiDataService} from '../../_service/wiki.data.service';
+import {WikiDataService} from '../../../_service/wiki.data.service';
 import {Observable, of} from 'rxjs';
 import {catchError, map} from 'rxjs/operators';
-import {FullEntry} from '../../_model/fullEntry';
+import {FullEntry} from '../../../_model/fullEntry';
 import {STEPPER_GLOBAL_OPTIONS} from '@angular/cdk/stepper';
-import {SmallEntry} from '../../_model/smallEntry';
-import {EntryMetadata} from '../../_model/entryMetaData';
+import {SmallEntry} from '../../../_model/smallEntry';
+import {EntryMetadata} from '../../../_model/entryMetaData';
 
 interface CustomForm{
   value: string;

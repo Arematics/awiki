@@ -1,7 +1,7 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
-import {EntryCreatorData} from '../entry.creator.data';
-import {EntryDeleteData} from '../entry.delete.data';
+import {EntryCreatorData} from '../../_model/entry.creator.data';
+import {EntryDeleteData} from '../../_model/entry.delete.data';
 
 @Component({
   selector: 'app-entrydelete-dialog',

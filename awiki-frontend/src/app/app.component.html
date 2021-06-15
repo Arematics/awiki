@@ -1,4 +1,6 @@
 <app-head></app-head>
-<router-outlet (activate)="onActivate()"></router-outlet>
+<app-page>
+  <router-outlet (activate)="onActivate()"></router-outlet>
+</app-page>
 <app-footer class="footer"></app-footer>
 <app-cookie-alert *ngIf="areCookiesNotAccepted()"></app-cookie-alert>

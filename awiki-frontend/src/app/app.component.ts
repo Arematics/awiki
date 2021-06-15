@@ -1,7 +1,7 @@
-import {Component} from '@angular/core';
+import {Component, ViewChild} from '@angular/core';
 import {CookieService} from 'ngx-cookie-service';
 import {ActivatedRoute, Router} from '@angular/router';
-import {from} from 'rxjs';
+import {PageComponent} from './components/page/page.component';
 
 @Component({
   selector: 'app-root',
@@ -10,6 +10,7 @@ import {from} from 'rxjs';
 })
 export class AppComponent{
   title = 'wiki';
+  @ViewChild(PageComponent) page: PageComponent;
 
   constructor(private cookies: CookieService, private route: ActivatedRoute) {
   }
@@ -27,6 +28,7 @@ export class AppComponent{
         }, 20);
       }
     });
+    this.page.onActivate();
   }
 
   areCookiesNotAccepted(): boolean{

@@ -39,6 +39,11 @@
   padding-left: 3px;
 }
 
+.textContainer{
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
 ::ng-deep #entry-content .ql-toolbar.ql-snow{
   display :none;
   border: 0;

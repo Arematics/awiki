@@ -1,7 +1,5 @@
-<app-page class="big-container flexbox page">
-  <section id="no-entry-content" *ngIf="entry === undefined">
-    <h2>No entry found</h2>
-  </section>
+<section id="no-entry-content" *ngIf="entry === undefined">
+  <h2>No entry found</h2>
+</section>
 
-  <app-entry-box [entryGroup]="group" [entry]="entry"></app-entry-box>
-</app-page>
+<app-entry-box [entryGroup]="group" [entry]="entry"></app-entry-box>

@@ -6,12 +6,12 @@ import {Router} from '@angular/router';
 class ResultItem{
   label: string;
   text: string;
-  entryId: number;
+  object: any;
 
-  constructor(label: string, text: string, entryId: number) {
+  constructor(label: string, text: string, object: any) {
     this.label = label;
     this.text = text;
-    this.entryId = entryId;
+    this.object = object;
   }
 }
 
@@ -30,53 +30,56 @@ export class QueryComponent implements OnInit {
   }
 
   async filterCountry(event): Promise<any> {
-    const filtered: ResultItem[] = [];
+    const data = [];
     const query = event.query;
 
     if (query.indexOf('title: ') === 0){
-      const results = await this.fetchResultItemsByTitle(query);
-      filtered.push(...results);
+      const trimQuery = query.substr(query.indexOf(' ') + 1);
+      const results = await this.fetchResultItemsByTitle(trimQuery);
+      data.push(...results);
     }else if (query.indexOf('text: ') === 0){
-      const results = await this.fetchResultItemsByContent(query);
-      filtered.push(...results);
+      const trimQuery = query.substr(query.indexOf(' ') + 1);
+      const results = await this.fetchResultItemsByContent(trimQuery);
+      data.push(...results);
     }else{
       const results = await this.fetchResultItemsByTitle(query);
-      filtered.push(...results);
+      data.push(...results);
       const results2 = await this.fetchResultItemsByContent(query);
-      filtered.push(...results2);
+      data.push(...results2);
     }
 
-    this.filteredResults = filtered;
+    this.filteredResults = data;
     event.query = '';
   }
 
   fetchResultItemsByTitle(input): Promise<ResultItem[]>{
-    input = input.indexOf('title: ') === 0 ? input.substr(input.indexOf(' ') + 1) : input;
     return this.wikiService.getResource('entry/findAllByTitle?title=' + input)
       .pipe(map(result => result.map(entry =>
         new ResultItem(entry.title.toUpperCase().replace(input.toUpperCase(),
           '<b style="color: var(--color-blue-accent)">' + input + '</b>'),
-          entry.content.substr(0, 200) + ' ...', entry.id))))
+          entry.content.substr(0, 200) + ' ...', entry))))
       .toPromise();
   }
 
   fetchResultItemsByContent(input): Promise<ResultItem[]>{
-    input = input.indexOf('text: ') === 0 ? input.substr(input.indexOf(' ') + 1) : input;
     return this.wikiService.getResource('entry/findAllByContent?like=' + input)
       .pipe(map(result => result.map(entry => {
-        const content = entry.content;
-        const first = content.indexOf(input);
-        const end = content.indexOf(' ', first + input.length);
-        const wordLength = (end - first) + 1;
-        const begin2 = first - 50 < 0 ? 0 : first - 50;
-        const trimPlace = content.substr(begin2, 50 + wordLength + 60);
-        const replaced = trimPlace.replace(input, '<b style="color: red">' + input + '</b>');
-        return new ResultItem(entry.title + ' (Text Match)', (begin2 !== 0 ? '... ' : '') + replaced + ' ...', entry.id);
+        return new ResultItem(entry.title + ' (Text Match)', this.highlightMatches(entry.content, input), entry);
       })))
       .toPromise();
   }
 
+  highlightMatches(content: string, input: string): string{
+    const firstMatch = content.toLowerCase().indexOf(input.toLowerCase());
+    const end = content.indexOf(' ', firstMatch + input.length);
+    const wordLength = (end - firstMatch) + 1;
+    const begin2 = firstMatch - 50 < 0 ? 0 : firstMatch - 50;
+    const trimPlace = content.substr(begin2, 50 + wordLength + 60);
+    const addedDots = (begin2 !== 0 ? '... ' : '') + trimPlace + '...';
+    return addedDots.replace(input, '<b style="color: red">' + input + '</b>');
+  }
+
   select(event: any): void {
-    this.router.navigate(['entry', event.entryId]).then();
+    this.router.navigate(['entry', event.object.id]).then();
   }
 }
