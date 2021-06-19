@@ -2,6 +2,8 @@ import {Component, ViewChild} from '@angular/core';
 import {CookieService} from 'ngx-cookie-service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {PageComponent} from './components/page/page.component';
+import {Title} from '@angular/platform-browser';
+import {SeoService} from './_service/seo.service';
 
 @Component({
   selector: 'app-root',
@@ -12,10 +14,11 @@ export class AppComponent{
   title = 'wiki';
   @ViewChild(PageComponent) page: PageComponent;
 
-  constructor(private cookies: CookieService, private route: ActivatedRoute) {
+  constructor(private cookies: CookieService, private route: ActivatedRoute, private seo: SeoService) {
   }
 
   onActivate(): void {
+    this.seo.updateTitle('Arematics Wiki');
     this.route.fragment.subscribe(fragment => {
       if (fragment === undefined || fragment === null){
         const scrollToTop = window.setInterval(() => {

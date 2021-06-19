@@ -8,13 +8,16 @@ import {WikiEntryGroupResolver} from '../_resolver/wikiEntryGroupResolver';
 import {PanelComponent} from '../admin/panel/panel.component';
 import {AuthGuard} from '../_helper/auth.guard';
 import {PrivacyComponent} from '../components/privacy/privacy.component';
+import {NotFoundComponent} from '../components/notfound/notfound.component';
 
 const routes: Routes = [
-  {path: '', component: HomeComponent},
-  {path: 'entry/:id', component: WikiEntryComponent, resolve: {entry: WikiEntryResolver, group: WikiEntryGroupResolver}},
+  { path: '', component: HomeComponent},
+  { path: 'entry/:id', component: WikiEntryComponent, resolve: {entry: WikiEntryResolver, group: WikiEntryGroupResolver}},
   { path: 'impressum', component: ImpressumComponent},
   { path: 'privacy', component: PrivacyComponent},
-  { path: 'admin', component: PanelComponent, canActivate: [AuthGuard], data: { roles: ['admin']}}
+  { path: 'admin', component: PanelComponent, canActivate: [AuthGuard], data: { roles: ['admin']}},
+  { path: 'error', component: NotFoundComponent},
+  { path: '**', redirectTo: 'error'},
 ];
 
 @NgModule({

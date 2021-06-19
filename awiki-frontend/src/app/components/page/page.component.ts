@@ -1,5 +1,5 @@
 import {Component, HostListener, OnInit} from '@angular/core';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
   selector: 'app-page',
@@ -13,7 +13,7 @@ export class PageComponent implements OnInit {
 
   forceNotVisible = false;
 
-  constructor(private router: Router) {
+  constructor(private route: ActivatedRoute, private router: Router) {
   }
 
   ngOnInit(): void {
@@ -54,6 +54,8 @@ export class PageComponent implements OnInit {
       case '/admin': return false;
       case '/privacy': return false;
       case '/impressum': return false;
+      case '/error': return false;
+      case '/shop': return false;
     }
     return true;
   }

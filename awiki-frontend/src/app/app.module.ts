@@ -82,7 +82,7 @@ function initializeKeycloak(keycloak: KeycloakService): any {
     AdsenseModule.forRoot({
       adClient: 'ca-pub-8838466162667140'
     }),
-    PipeModule,
+    PipeModule
   ],
   providers: [CookieService, {
     provide: APP_INITIALIZER,

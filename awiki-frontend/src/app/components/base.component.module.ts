@@ -5,7 +5,7 @@ import {FooterModule} from './footer/footer.module';
 import {PrivacyModule} from './privacy/privacy.module';
 import {CookieModule} from './cookie-alert/cookie.module';
 import {PipeModule} from '../_pipe/pipe.module';
-
+import {NotFoundComponent} from './notfound/notfound.component';
 
 
 @NgModule({
@@ -17,7 +17,11 @@ import {PipeModule} from '../_pipe/pipe.module';
     PrivacyModule,
     CookieModule,
     HeadModule,
-    FooterModule
+    FooterModule,
+    NotFoundComponent
+  ],
+  declarations: [
+    NotFoundComponent
   ]
 })
 export class BaseComponentModule {}
