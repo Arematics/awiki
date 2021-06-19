@@ -9,6 +9,9 @@
     <ng-template matStepperIcon="title">
       <mat-icon>title</mat-icon>
     </ng-template>
+    <ng-template matStepperIcon="keywords">
+      <mat-icon>tag</mat-icon>
+    </ng-template>
     <ng-template matStepperIcon="image">
       <mat-icon>image</mat-icon>
     </ng-template>
@@ -38,6 +41,27 @@
           <button mat-button matStepperNext>Next</button>
         </div>
       </form>
+    </mat-step>
+    <mat-step label="Choose keywords" state="keywords">
+      <mat-form-field class="keywordChips">
+        <mat-chip-list #chipList>
+          <mat-chip
+            *ngFor="let keyword of keywords"
+            (removed)="remove(keyword)">
+            {{keyword}}
+            <mat-icon matChipRemove>cancel</mat-icon>
+          </mat-chip>
+          <input
+            placeholder="New keyword..."
+            [matChipInputFor]="chipList"
+            [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+            (matChipInputTokenEnd)="add($event)">
+        </mat-chip-list>
+      </mat-form-field>
+      <div>
+        <button mat-button matStepperPrevious>Back</button>
+        <button mat-button matStepperNext>Next</button>
+      </div>
     </mat-step>
     <mat-step [stepControl]="imageFormGroup" label="Choose image" state="image">
       <form [formGroup]="imageFormGroup" disabled>

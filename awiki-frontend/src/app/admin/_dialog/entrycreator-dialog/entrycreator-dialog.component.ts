@@ -10,6 +10,8 @@ import {FullEntry} from '../../../_model/fullEntry';
 import {STEPPER_GLOBAL_OPTIONS} from '@angular/cdk/stepper';
 import {SmallEntry} from '../../../_model/smallEntry';
 import {EntryMetadata} from '../../../_model/entryMetaData';
+import {COMMA, ENTER} from '@angular/cdk/keycodes';
+import {MatChipInputEvent} from '@angular/material/chips';
 
 interface CustomForm{
   value: string;
@@ -43,6 +45,8 @@ export class EntrycreatorDialogComponent implements OnInit {
   metaData: EntryMetadata[] = [];
   result: FullEntry;
   fullSize = false;
+  separatorKeysCodes: number[] = [ENTER, COMMA];
+  keywords: string[] = [];
 
   constructor(public dialogRef: MatDialogRef<EntrycreatorDialogComponent>,
               @Inject(MAT_DIALOG_DATA) public data: EntryCreatorData,
@@ -63,6 +67,11 @@ export class EntrycreatorDialogComponent implements OnInit {
       this.content = this.data.entry.content;
       this.image = this.data.entry.image;
       this.publish = this.data.entry.published;
+      const meta: EntryMetadata = await
+        this.service.getResource(`metadata/search/findByEntryIdAndName?entryId=${this.data.entry.id}&name=keywords`)
+        .toPromise()
+        .then(data => data, err => {});
+      this.keywords = meta.value.split(', ');
     } else {
       this.titleControl.setAsyncValidators(this.validateExists.bind(this));
     }
@@ -145,5 +154,30 @@ export class EntrycreatorDialogComponent implements OnInit {
       .then(data => data, err => newEditor);
     lastEditor.value = this.data.userProfile.id;
     this.service.postResource('metadata', lastEditor).toPromise().then();
+    const newKeywords = {id: null, entryId: result.id, name: 'keywords', value: this.keywords.join(', ')};
+    const keywords = await this.service.getResource(`metadata/search/findByEntryIdAndName?entryId=${result.id}&name=keywords`)
+      .toPromise()
+      .then(data => data, err => newKeywords);
+    keywords.value = this.keywords.join(', ');
+    this.service.postResource('metadata', keywords).toPromise().then();
+  }
+
+  add($event: MatChipInputEvent): void {
+    const value = ($event.value || '').trim();
+    // Add our fruit
+    if (value) {
+      this.keywords.push(value);
+    }
+
+    // Clear the input value
+    $event.input.value = '';
+  }
+
+  remove(keyword: any): void {
+    const index = this.keywords.indexOf(keyword);
+
+    if (index >= 0) {
+      this.keywords.splice(index, 1);
+    }
   }
 }

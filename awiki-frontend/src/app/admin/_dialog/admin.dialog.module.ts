@@ -15,6 +15,7 @@ import {CommonModule} from '@angular/common';
 import {MatDividerModule} from '@angular/material/divider';
 import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 import {WikiEntryModule} from '../../components/wiki-entry/entry.module';
+import {MatChipsModule} from '@angular/material/chips';
 
 
 
@@ -24,22 +25,23 @@ import {WikiEntryModule} from '../../components/wiki-entry/entry.module';
     EntrydeleteDialogComponent,
     GroupdeleteDialogComponent
   ],
-  imports: [
-    MatIconModule,
-    MatStepperModule,
-    MatDialogModule,
-    MatButtonModule,
-    MatFormFieldModule,
-    ReactiveFormsModule,
-    MatInputModule,
-    EditorModule,
-    MatSlideToggleModule,
-    FormsModule,
-    CommonModule,
-    MatDividerModule,
-    FontAwesomeModule,
-    WikiEntryModule
-  ],
+    imports: [
+        MatIconModule,
+        MatStepperModule,
+        MatDialogModule,
+        MatButtonModule,
+        MatFormFieldModule,
+        ReactiveFormsModule,
+        MatInputModule,
+        EditorModule,
+        MatSlideToggleModule,
+        FormsModule,
+        CommonModule,
+        MatDividerModule,
+        FontAwesomeModule,
+        WikiEntryModule,
+        MatChipsModule
+    ],
   exports: [
     EntrycreatorDialogComponent,
     EntrydeleteDialogComponent,

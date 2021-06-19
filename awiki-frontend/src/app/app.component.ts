@@ -19,6 +19,7 @@ export class AppComponent{
 
   onActivate(): void {
     this.seo.updateTitle('Arematics Wiki');
+    this.seo.updateKeywords('programming, application, development, program, code, arematics');
     this.route.fragment.subscribe(fragment => {
       if (fragment === undefined || fragment === null){
         const scrollToTop = window.setInterval(() => {
