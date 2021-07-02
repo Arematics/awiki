@@ -4,7 +4,7 @@ import {ImpressumComponent} from './impressum.component';
 
 
 @NgModule({
-  declarations: [ImpressumComponent],
-  exports: [ImpressumComponent]
+    declarations: [ImpressumComponent],
+    exports: [ImpressumComponent]
 })
 export class ImprintModule {}

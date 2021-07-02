@@ -12,6 +12,7 @@ import {SmallEntry} from '../../../_model/smallEntry';
 import {EntryMetadata} from '../../../_model/entryMetaData';
 import {COMMA, ENTER} from '@angular/cdk/keycodes';
 import {MatChipInputEvent} from '@angular/material/chips';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 interface CustomForm{
   value: string;
@@ -51,7 +52,8 @@ export class EntrycreatorDialogComponent implements OnInit {
   constructor(public dialogRef: MatDialogRef<EntrycreatorDialogComponent>,
               @Inject(MAT_DIALOG_DATA) public data: EntryCreatorData,
               private formBuilder: FormBuilder,
-              private service: WikiDataService) {
+              private service: WikiDataService,
+              private snackBar: MatSnackBar) {
   }
 
   async ngOnInit(): Promise<void> {
@@ -179,5 +181,30 @@ export class EntrycreatorDialogComponent implements OnInit {
     if (index >= 0) {
       this.keywords.splice(index, 1);
     }
+  }
+
+  async generateTmpLink(): Promise<void> {
+    if (!this.exists) return;
+    const uuid = await this.service.getResource(`entry/tmplink?id=${this.data.entry.id}`)
+      .toPromise()
+      .then(data => data, err => undefined);
+    if (uuid !== undefined) {
+      this.copyMessage(`https://wiki.arematics.com/entry/${this.data.entry.id}?tmpUUID=${uuid}`);
+      this.snackBar.open('Link copied to clipboard', 'Nice');
+    }
+  }
+
+  copyMessage(val: string): void{
+    const selBox = document.createElement('textarea');
+    selBox.style.position = 'fixed';
+    selBox.style.left = '0';
+    selBox.style.top = '0';
+    selBox.style.opacity = '0';
+    selBox.value = val;
+    document.body.appendChild(selBox);
+    selBox.focus();
+    selBox.select();
+    document.execCommand('copy');
+    document.body.removeChild(selBox);
   }
 }

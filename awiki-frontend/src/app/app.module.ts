@@ -28,6 +28,7 @@ import {BaseComponentModule} from './components/base.component.module';
 import {AdminModule} from './admin/admin.module';
 import {MatBottomSheetModule} from '@angular/material/bottom-sheet';
 import {PipeModule} from './_pipe/pipe.module';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 
 function initializeKeycloak(keycloak: KeycloakService): any {
   return () =>
@@ -82,7 +83,8 @@ function initializeKeycloak(keycloak: KeycloakService): any {
     AdsenseModule.forRoot({
       adClient: 'ca-pub-8838466162667140'
     }),
-    PipeModule
+    PipeModule,
+    MatSnackBarModule
   ],
   providers: [CookieService, {
     provide: APP_INITIALIZER,

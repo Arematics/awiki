@@ -112,4 +112,8 @@
           (click)="saveEntry()"
           [mat-dialog-close]="true">Save</button>
   <mat-slide-toggle color="primary" [(ngModel)]="publish">Publish</mat-slide-toggle>
+  <button mat-raised-button
+          color="primary"
+          [disabled]="!exists || publish == true"
+          (click)="generateTmpLink()">Get Temp Link</button>
 </div>

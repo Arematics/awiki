@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {FullEntry} from '../../_model/fullEntry';
 import {WikiDataService} from '../../_service/wiki.data.service';
 import {map} from 'rxjs/operators';
+import {SeoService} from '../../_service/seo.service';
 
 @Component({
   selector: 'app-home',
@@ -12,10 +13,11 @@ export class HomeComponent implements OnInit {
 
   filteredResults: FullEntry[] = [];
 
-  constructor(private wikiService: WikiDataService) { }
+  constructor(private wikiService: WikiDataService, private seo: SeoService) { }
 
   ngOnInit(): void {
     this.filterCountry().then();
+    this.seo.updateTitle('Landing Page - Arematics Wiki');
   }
 
   async filterCountry(): Promise<any> {

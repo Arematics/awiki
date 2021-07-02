@@ -4,13 +4,15 @@
 $color-light: black;
 $color-accent-light: #c3c3c3;
 $background-light: #ffffff;
-$background-accent-light: #f1f1f1;
+$background-accent-light: #dbdbdb;
+$background-accent-light-rgb: 219, 219, 219;
 $input-background-color-light: #dcdcdc;
 
 $color-dark: #FFFFFF;
 $color-accent-dark: #AFAFAF;
 $background-dark: #0D0C0C;
 $background-accent-dark: #26262E;
+$background-accent-dark-rgb: 38, 38, 46;
 $input-background-color-dark: #252525;
 
 :root {
@@ -20,6 +22,7 @@ $input-background-color-dark: #252525;
   --color-background-accent: #{$background-accent-light};
   --color-blue-accent: #539ad2;
   --color-blue-background: #0c3fab;
+  --color-background-accent-rgb: #{$background-accent-light-rgb};
   --input-background-color: #{$input-background-color-light};
 }
 
@@ -177,6 +180,7 @@ hr{
     --color-accent-text: #{$color-accent-dark};
     --color-background: #{$background-dark};
     --color-background-accent: #{$background-accent-dark};
+    --color-background-accent-rgb: #{$background-accent-dark-rgb};
     --input-background-color: #{$input-background-color-dark};
   }
 }

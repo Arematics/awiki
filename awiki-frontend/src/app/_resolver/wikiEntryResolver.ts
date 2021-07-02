@@ -13,7 +13,8 @@ export class WikiEntryResolver implements Resolve<FullEntry> {
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<FullEntry> | Observable<never> {
     const id = route.paramMap.get('id');
-    return this.dataService.getResource('entry/' + id)
+    const tmpUUID = route.queryParamMap.get('tmpUUID');
+    return this.dataService.getResource('entry/' + id + (tmpUUID !== null ? `?tmpUUID=${tmpUUID}` : ''))
       .pipe(
         map(product => product),
         catchError(error => this.router.navigate(['/error']))

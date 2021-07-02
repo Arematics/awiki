@@ -16,14 +16,15 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.security.RolesAllowed;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @CrossOrigin
 @RestController
 @RequestMapping("/entry")
 @RequiredArgsConstructor(onConstructor_=@Autowired)
 public class EntryController {
+
+    private final Map<Long, UUID> tmpLinks = new HashMap<>();
 
     private final FullEntryRepository fullEntryRepository;
     private final SmallEntryRepository smallEntryRepository;
@@ -45,19 +46,22 @@ public class EntryController {
     }
 
     @GetMapping("/{id}")
-    public FullEntry findFullEntry(@PathVariable Long id){
+    public FullEntry findFullEntry(@PathVariable Long id, @RequestParam Optional<UUID> tmpUUID){
         SecurityContext securityContext = SecurityContextHolder.getContext();
         boolean isAdmin = securityContext.getAuthentication().getAuthorities()
                 .stream()
                 .anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equals("ROLE_admin"));
         Optional<FullEntry> entry = fullEntryRepository.findById(id);
-        if(entry.isPresent() && (isAdmin || entry.get().isPublished())){
+        if(entry.isPresent()) {
             FullEntry result = entry.get();
-            result.setCalls(result.getCalls() + 1);
-            return fullEntryRepository.save(result);
-        }else{
-            throw new RuntimeException("Could not find entry with id: " + id);
+            boolean tmpLinkMatch = tmpLinks.getOrDefault(result.getId(), UUID.randomUUID())
+                    .equals(tmpUUID.orElse(UUID.randomUUID()));
+            if (tmpLinkMatch || entry.get().isPublished() || isAdmin) {
+                result.setCalls(result.getCalls() + 1);
+                return fullEntryRepository.save(result);
+            }
         }
+        throw new RuntimeException("Could not find entry with id: " + id);
     }
 
     @GetMapping("/{id}/group")
@@ -102,6 +106,27 @@ public class EntryController {
             FullEntry result = entry.get();
             result.setOrderIndex(orderIndex);
             return ResponseEntity.ok(fullEntryRepository.save(result));
+        }else{
+            throw new RuntimeException("Could not find entry with id: " + id);
+        }
+    }
+
+    @RolesAllowed("admin")
+    @GetMapping("/tmplink")
+    public ResponseEntity<UUID> generateTemporaryLink(@RequestParam Long id){
+        Optional<FullEntry> entry = fullEntryRepository.findById(id);
+        System.out.println("Gen Temp Link");
+        if(entry.isPresent()){
+            if(tmpLinks.containsKey(entry.get().getId())) return ResponseEntity.ok(tmpLinks.get(entry.get().getId()));
+            System.out.println("Not Exists");
+            UUID uuid = UUID.randomUUID();
+            tmpLinks.put(entry.get().getId(), uuid);
+            TimerTask task = new TimerTask() {
+                public void run() { tmpLinks.remove(entry.get().getId()); }
+            };
+            new Timer().schedule(task, 1000 * 60 * 5);
+            System.out.println(uuid);
+            return ResponseEntity.ok(uuid);
         }else{
             throw new RuntimeException("Could not find entry with id: " + id);
         }

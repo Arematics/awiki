@@ -1,8 +1,7 @@
 import {Component, ViewChild} from '@angular/core';
 import {CookieService} from 'ngx-cookie-service';
-import {ActivatedRoute, Router} from '@angular/router';
+import {ActivatedRoute} from '@angular/router';
 import {PageComponent} from './components/page/page.component';
-import {Title} from '@angular/platform-browser';
 import {SeoService} from './_service/seo.service';
 
 @Component({
