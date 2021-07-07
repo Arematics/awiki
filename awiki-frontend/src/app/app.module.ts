@@ -38,11 +38,11 @@ function initializeKeycloak(keycloak: KeycloakService): any {
         realm: environment.realm_name,
         clientId: environment.client_id
       },
-      /*initOptions: {
+      initOptions: {
         onLoad: 'check-sso',
         silentCheckSsoRedirectUri:
           window.location.origin + '/assets/silent-check-sso.html',
-      },*/
+      },
       bearerExcludedUrls: ['/assets', '/clients/public'],
     });
 }
